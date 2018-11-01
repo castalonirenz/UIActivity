@@ -1,170 +1,33 @@
 import React, { Component } from "react";
 import { View, Text, ScrollView, StyleSheet, Image } from "react-native";
-import { data_samples } from "../myArray/image";
-import {explores} from '../myArray/image'
-
+import ExploreRender from '../screenWillRender/explores'
+import DataSamplesRender from '../screenWillRender/data_samples'
+import SavedListRender from '../screenWillRender/saved_list'
 class exploreScreen extends Component {
-  state = {
-    myImage: data_samples,
-    exploresImage: explores,
-  };
   static navigationOptions = {
-    header: null
+    header: null,
+   
   };
 
   render() {
+    
     return (
-        <ScrollView>
+      
+        <ScrollView showsVerticalScrollIndicator={false}>
+          
       <View style={styles.container}>
         <Text style={{color:"black", fontWeight:"bold", fontSize:30}}> Explore</Text>
-
-
-        <View style={{height:180}}>
-        <ScrollView horizontal={true}>
-
-        <View style={styles.imageView}>
-          <Image
-            source={{
-              uri: this.state.exploresImage[0].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-          <Text>{this.state.exploresImage[0].name}</Text>
-          </View>
-
-          <View style={styles.imageView}>
-          <Image
-            source={{
-              uri: this.state.exploresImage[1].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-          <Text>{this.state.exploresImage[1].name}</Text>
-          </View>
-
-           <View style={styles.imageView}>
-          <Image
-            source={{
-              uri: this.state.exploresImage[2].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-          <Text>{this.state.exploresImage[2].name}</Text>
-          </View>
-
-          <View style={styles.imageView}>
-          <Image
-            source={{
-              uri: this.state.exploresImage[3].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-          <Text>{this.state.exploresImage[3].name}</Text>
-          </View>
-
-          <View style={styles.imageView}>
-          <Image
-            source={{
-              uri: this.state.exploresImage[4].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-          <Text>{this.state.exploresImage[4].name}</Text>
-          </View>
-
-           
-
-
-        </ScrollView>
-        </View>
-
+       
+        <ExploreRender/>
+        
+       
         <Text style={{color:"black", fontWeight:"bold", fontSize:30}}> Zurich</Text>
 
         
-        <View style={{height:210}}>
-        <ScrollView horizontal={true}>
+        <DataSamplesRender/>
+         <Text style={{color:"black", fontWeight:"bold", fontSize:30}}> Stockholm</Text>
 
-        <View style={{marginLeft: 15}}>
-          <Image
-            source={{
-              uri: this.state.myImage[0].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-          <Text>{this.state.myImage[0].room_size}</Text>
-          <Text>{this.state.myImage[0].name}</Text>
-          </View>
-
-          <View style={{marginLeft: 15}}>
-          <Image
-            source={{
-              uri: this.state.myImage[1].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-           <Text>{this.state.myImage[1].room_size}</Text>
-          <Text>{this.state.myImage[1].name}</Text>
-          </View>
-
-            <View style={{marginLeft: 15}}>
-          <Image
-            source={{
-              uri: this.state.myImage[2].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-           <Text>{this.state.myImage[2].room_size}</Text>
-          <Text>{this.state.myImage[2].name}</Text>
-          </View>
-
-           <View style={{marginLeft: 15}}>
-          <Image
-            source={{
-              uri: this.state.myImage[3].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-           <Text>{this.state.myImage[3].room_size}</Text>
-          <Text>{this.state.myImage[3].name}</Text>
-          </View>
-
-           <View style={{marginLeft: 15}}>
-          <Image
-            source={{
-              uri: this.state.myImage[4].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-           <Text>{this.state.myImage[4].room_size}</Text>
-          <Text>{this.state.myImage[4].name}</Text>
-          
-          </View>
-
-           <View style={{marginLeft: 15}}>
-          <Image
-            source={{
-              uri: this.state.myImage[5].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-           <Text>{this.state.myImage[5].room_size}</Text>
-          <Text>{this.state.myImage[5].name}</Text>
-          </View>
-
-           <View style={{marginLeft: 15}}>
-          <Image
-            source={{
-              uri: this.state.myImage[6].img
-            }}
-            style={{ width: 150, height: 150 }}
-          />
-           <Text>{this.state.myImage[6].room_size}</Text>
-          <Text>{this.state.myImage[6].name}</Text>
-          </View>
-
-
-        </ScrollView>
-        </View>
+        <SavedListRender/>
 
         
 
@@ -177,14 +40,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center"
-  },
-  imageView:{
-    borderRadius: 5, 
-    borderWidth: 2, 
-    borderColor: "gray",
-    marginLeft: 15
-      
   }
+  
 });
 
 export default exploreScreen;

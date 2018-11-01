@@ -39,7 +39,23 @@ class loginScreen extends Component {
     this.props.navigation.goBack()
   }
   loggedOn = () =>{
+
+    if(this.state.emailtext===''){
+      alert('Please fill out email')
+  }
+  else if(this.state.passwordText===''){
+    alert('Please fill out password')
+  }
+
+  else{
+    this.setState({
+      emailtext: '',
+      passwordText: ''
+    });
     this.props.navigation.navigate('LoggedOn')
+
+  }
+    
   }
 
   render() {
