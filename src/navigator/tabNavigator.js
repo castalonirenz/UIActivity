@@ -4,6 +4,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import {createBottomTabNavigator } from "react-navigation";
 import exploreScreen from '../screen/exploreScreen';
 import Saved from '../screen/savedScreen';
+import messageScreen from '../screen/messageScreen';
+
 
 
 class tabNavigator extends Component {
@@ -53,7 +55,7 @@ export const TabStack = createBottomTabNavigator({
             }
           },
           Inbox: {
-            screen: exploreScreen,
+            screen: messageScreen,
       
             navigationOptions: {
               tabBarLabel: "Inbox",
@@ -64,7 +66,7 @@ export const TabStack = createBottomTabNavigator({
             }
           },
           Profile: {
-            screen: exploreScreen,
+            screen: messageScreen,
       
             navigationOptions: {
               tabBarLabel: "Profile",

@@ -45,6 +45,7 @@ class signUpTwo extends Component {
             <Icon name="ios-arrow-back" onPress={this.Back} />
           </Left>
         </Header>
+
         <View style={styles.MainContainer}>
         <View style={styles.secondContainer}>
           <Text style={styles.textDesign}>And, your email?</Text>
@@ -60,10 +61,10 @@ class signUpTwo extends Component {
             underlineColorAndroid="white"
           />
 
-          <View style={{}}>
+        <View style={{flexDirection: "row"}}>
         <Text style={{color:"white"}}>I'd like to receive marketing and policy {'\n'} 
         communications from Ting and its{'\n'}partners</Text>
-        <Switch style={{marginLeft:"70%"}}
+        <Switch
           onValueChange={isSwitchOn => this.setState({isSwitchOn})}
           value={this.state.isSwitchOn} 
         />

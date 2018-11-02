@@ -24,6 +24,10 @@ class signUpLast extends Component {
   setDate(newDate) {
     this.setState({ chosenDate: newDate });
   }
+  goToLogin = () =>{
+    alert("Registration Complete, Proceeding to Login")
+    this.props.navigation.navigate("Login")
+  }
 
 
   render() {
@@ -65,7 +69,7 @@ class signUpLast extends Component {
 
         
           <TouchableOpacity style={{marginLeft:"75%"}}>
-            <Ionicons name="ios-arrow-dropright-circle" color="white" size={50}></Ionicons>
+            <Ionicons name="ios-arrow-dropright-circle" color="white" size={50} onPress={this.goToLogin}></Ionicons>
           </TouchableOpacity>
 
 

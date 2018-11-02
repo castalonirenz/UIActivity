@@ -1,20 +1,43 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image, ImageBackground, ListView, StyleSheet, ScrollView } from 'react-native';
+import List from '../screenWillRender/messageList'
 
-class componentName extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+class messageScreen extends Component {
+ 
 
   render() {
     return (
-      <View>
-        <Text> textInComponent </Text>
+      <View style={styles.container}>
+      
+          <Text style={styles.HeaderStyle}> INBOX</Text>
+          <Text style={styles.messageRead}>You have no unread messages.</Text>
+          
+
+          <ScrollView>
+
+          <List/>
+
+          </ScrollView>
       </View>
     );
   }
 }
 
-export default componentName;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  HeaderStyle:{
+    color:"black", 
+    fontWeight:"bold", 
+    fontSize:26,
+    marginLeft: 10
+  },
+  messageRead:{
+    marginTop: "10%",
+    marginLeft: 20
+  }
+  
+});
+
+export default messageScreen;
