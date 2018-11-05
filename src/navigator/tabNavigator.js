@@ -28,7 +28,7 @@ export const TabStack = createBottomTabNavigator({
               
       
               tabBarIcon: ({ tintColor }) => (
-                <Icon name="md-search" color={tintColor} size={24} />
+                <Icon name={Platform.OS ==="android" ?"md-search" : "ios-search"} color={tintColor} size={24} />
               )
             }
           },
@@ -39,7 +39,7 @@ export const TabStack = createBottomTabNavigator({
               tabBarLabel: "Saved",
       
               tabBarIcon: ({ tintColor }) => (
-                <Icon name="md-heart-outline" color={tintColor} size={24} />
+                <Icon name={Platform.OS === "android" ? "md-heart-outline": "ios-heart-outline"} color={tintColor} size={24} />
               )
             }
           },
@@ -50,7 +50,7 @@ export const TabStack = createBottomTabNavigator({
               tabBarLabel: "Trips",
       
               tabBarIcon: ({ tintColor }) => (
-                <Icon name="md-plane" color={tintColor} size={24} />
+                <Icon name={Platform.OS === "android"?"md-plane": "ios-plane"} color={tintColor} size={24} />
               )
             }
           },
@@ -61,7 +61,7 @@ export const TabStack = createBottomTabNavigator({
               tabBarLabel: "Inbox",
       
               tabBarIcon: ({ tintColor }) => (
-                <Icon name="md-chatbubbles" color={tintColor} size={24} />
+                <Icon name={Platform.OS==="android"?"md-chatbubbles":"ios-chatbubbles"} color={tintColor} size={24} />
               )
             }
           },
@@ -72,7 +72,7 @@ export const TabStack = createBottomTabNavigator({
               tabBarLabel: "Profile",
       
               tabBarIcon: ({ tintColor }) => (
-                <Icon name="md-contact" color={tintColor} size={24} />
+                <Icon name={Platform.OS ==="android"?"md-contact":"ios-contact"} color={tintColor} size={24} />
               )
             }
           }
