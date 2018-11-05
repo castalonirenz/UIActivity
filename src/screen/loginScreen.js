@@ -52,7 +52,7 @@ class loginScreen extends Component {
         emailtext: "",
         passwordText: ""
       });
-      this.props.navigation.navigate("LoggedOn");
+      this.props.navigation.navigate("Tab");
     }
   };
 

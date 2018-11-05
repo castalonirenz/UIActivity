@@ -74,9 +74,10 @@ class signUpTwo extends Component {
               {"\n"}
               partners
             </Text>
+
             <Switch
               onValueChange={isSwitchOn => this.setState({ isSwitchOn })}
-              value={this.state.isSwitchOn}
+              value={this.state.isSwitchOn} onTintColor="yellow"
             />
           </View>
 

@@ -16,7 +16,7 @@ const RootStack = createStackNavigator(
       SignUpOne: signUpOne,
       SignUpTwo: signUpTwo,
       SignUpLast: signUpLast,
-      LoggedOn: TabStack
+      
     },
     {
       initialRouteName: "Home",
