@@ -24,7 +24,9 @@ class dataSamplesRender extends Component {
               }}
               style={{ width: 150, height: 150 }}
             />
-            <Text>{this.state.exploresImage[0].name}</Text>
+            <Text style={{ color: "black" }}>
+              {this.state.exploresImage[0].name}
+            </Text>
           </View>
 
           <View style={styles.imageView}>
@@ -34,7 +36,9 @@ class dataSamplesRender extends Component {
               }}
               style={{ width: 150, height: 150 }}
             />
-            <Text>{this.state.exploresImage[1].name}</Text>
+            <Text style={{ color: "black" }}>
+              {this.state.exploresImage[1].name}
+            </Text>
           </View>
 
           <View style={styles.imageView}>
@@ -44,7 +48,9 @@ class dataSamplesRender extends Component {
               }}
               style={{ width: 150, height: 150 }}
             />
-            <Text>{this.state.exploresImage[2].name}</Text>
+            <Text style={{ color: "black" }}>
+              {this.state.exploresImage[2].name}
+            </Text>
           </View>
 
           <View style={styles.imageView}>
@@ -54,7 +60,9 @@ class dataSamplesRender extends Component {
               }}
               style={{ width: 150, height: 150 }}
             />
-            <Text>{this.state.exploresImage[3].name}</Text>
+            <Text style={{ color: "black" }}>
+              {this.state.exploresImage[3].name}
+            </Text>
           </View>
 
           <View style={styles.imageView}>
@@ -64,7 +72,9 @@ class dataSamplesRender extends Component {
               }}
               style={{ width: 150, height: 150 }}
             />
-            <Text>{this.state.exploresImage[4].name}</Text>
+            <Text style={{ color: "black" }}>
+              {this.state.exploresImage[4].name}
+            </Text>
           </View>
         </ScrollView>
       </View>
