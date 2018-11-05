@@ -74,8 +74,9 @@ class signUpLast extends Component {
             placeHolderTextStyle={{ color: "#d3d3d3" }}
             onDateChange={this.setDate}
           />
+           <Text>Date: {this.state.chosenDate.toString().substr(4, 12)}</Text>
           </View>
-          {/* <Text>Date: {this.state.chosenDate.toString().substr(4, 12)}</Text> */}
+         
           
           <TouchableOpacity style={{ marginLeft: "75%" }}>
             <Ionicons
