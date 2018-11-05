@@ -21,7 +21,7 @@ class explores extends Component {
                                 uri: this.state.myImage[0].img
                             }}
                             style={{ width: 150, height: 150 }}
-                        ><TouchableOpacity><Icon name="md-heart" size={24} style={styles.iconDesign} ></Icon>
+                        ><TouchableOpacity style={styles.iconTouchable}><Icon name="md-heart-outline" size={24} color="white"></Icon>
                             </TouchableOpacity></ImageBackground>
                         <Text>{this.state.myImage[0].room_size}</Text>
                         <Text>{this.state.myImage[0].name}</Text>
@@ -33,7 +33,7 @@ class explores extends Component {
                                 uri: this.state.myImage[1].img
                             }}
                             style={{ width: 150, height: 150 }}
-                        ><TouchableOpacity><Icon name="md-heart" size={24} style={styles.iconDesign} ></Icon>
+                        ><TouchableOpacity style={styles.iconTouchable}><Icon name="md-heart-outline" size={24}  color="white"></Icon>
                             </TouchableOpacity></ImageBackground>
                         <Text>{this.state.myImage[1].room_size}</Text>
                         <Text>{this.state.myImage[1].name}</Text>
@@ -45,7 +45,7 @@ class explores extends Component {
                                 uri: this.state.myImage[2].img
                             }}
                             style={{ width: 150, height: 150 }}
-                        ><TouchableOpacity><Icon name="md-heart" size={24} style={styles.iconDesign} ></Icon>
+                        ><TouchableOpacity style={styles.iconTouchable}><Icon name="md-heart-outline" size={24}  color="white"></Icon>
                         </TouchableOpacity></ImageBackground>
                         <Text>{this.state.myImage[2].room_size}</Text>
                         <Text>{this.state.myImage[2].name}</Text>
@@ -57,7 +57,7 @@ class explores extends Component {
                                 uri: this.state.myImage[3].img
                             }}
                             style={{ width: 150, height: 150 }}
-                        ><TouchableOpacity><Icon name="md-heart" size={24} style={styles.iconDesign} ></Icon>
+                        ><TouchableOpacity style={styles.iconTouchable}><Icon name="md-heart-outline" size={24}  color="white" ></Icon>
                         </TouchableOpacity></ImageBackground>
                         <Text>{this.state.myImage[3].room_size}</Text>
                         <Text>{this.state.myImage[3].name}</Text>
@@ -69,7 +69,7 @@ class explores extends Component {
                                 uri: this.state.myImage[4].img
                             }}
                             style={{ width: 150, height: 150 }}
-                        ><TouchableOpacity><Icon name="md-heart" size={24} style={styles.iconDesign} ></Icon>
+                        ><TouchableOpacity style={styles.iconTouchable}><Icon name="md-heart-outline" size={24}  color="white"></Icon>
                         </TouchableOpacity></ImageBackground>
                         <Text>{this.state.myImage[4].room_size}</Text>
                         <Text>{this.state.myImage[4].name}</Text>
@@ -82,7 +82,7 @@ class explores extends Component {
                                 uri: this.state.myImage[5].img
                             }}
                             style={{ width: 150, height: 150 }}
-                        ><TouchableOpacity><Icon name="md-heart" size={24} style={styles.iconDesign} ></Icon>
+                        ><TouchableOpacity style={styles.iconTouchable}><Icon name="md-heart-outline" size={24}  color="white" ></Icon>
                         </TouchableOpacity></ImageBackground>
                         <Text>{this.state.myImage[5].room_size}</Text>
                         <Text>{this.state.myImage[5].name}</Text>
@@ -94,8 +94,12 @@ class explores extends Component {
                                 uri: this.state.myImage[6].img
                             }}
                             style={{ width: 150, height: 150 }}
-                        ><TouchableOpacity><Icon name="md-heart" size={24} style={styles.iconDesign} ></Icon>
-                        </TouchableOpacity></ImageBackground>
+                        >
+                        
+                        <TouchableOpacity style={styles.iconTouchable}><Icon name="md-heart-outline" size={24} color="white" ></Icon>
+                        </TouchableOpacity>
+                        
+                        </ImageBackground>
                         <Text>{this.state.myImage[6].room_size}</Text>
                         <Text>{this.state.myImage[6].name}</Text>
                     </View>
@@ -118,10 +122,13 @@ const styles = StyleSheet.create({
         marginLeft: 15
 
     },
-    iconDesign: {
-        color:"red",
-        marginLeft: "75%",
-        marginTop: 10
+    iconTouchable: {
+
+       
+         marginLeft: "75%", 
+         width: 25, 
+         height: 25, 
+         marginTop: 10
     }
 });
 

@@ -8,7 +8,7 @@ class Saved extends Component {
 
     render() {
         return (
-            <ScrollView>
+            <ScrollView style={{backgroundColor:'white'}}>
                 <Text style={styles.textStyle}> {this.state.SavedList[1].name}</Text>
                 <View style={styles.container}>
                     <Image source={{
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: 'center',
+        backgroundColor: 'white',
     },
     textStyle: {
 

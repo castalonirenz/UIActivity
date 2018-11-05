@@ -4,10 +4,7 @@ import ExploreRender from '../screenWillRender/explores'
 import DataSamplesRender from '../screenWillRender/data_samples'
 import SavedListRender from '../screenWillRender/saved_list'
 class exploreScreen extends Component {
-  static navigationOptions = {
-    header: null,
-   
-  };
+ 
 
   render() {
     
@@ -39,7 +36,8 @@ class exploreScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: 'white',
   }
   
 });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ImageBackground, ListView, StyleSheet, ScrollView } from 'react-native';
+import { View, Text,  ListView, StyleSheet, ScrollView } from 'react-native';
 import List from '../screenWillRender/messageList'
 
 class messageScreen extends Component {
@@ -26,12 +26,14 @@ class messageScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   HeaderStyle:{
     color:"black", 
     fontWeight:"bold", 
     fontSize:26,
-    marginLeft: 10
+    marginLeft: 10,
+    
   },
   messageRead:{
     marginTop: "10%",

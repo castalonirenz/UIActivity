@@ -39,7 +39,7 @@ export const TabStack = createBottomTabNavigator({
               tabBarLabel: "Saved",
       
               tabBarIcon: ({ tintColor }) => (
-                <Icon name="md-heart" color={tintColor} size={24} />
+                <Icon name="md-heart-outline" color={tintColor} size={24} />
               )
             }
           },

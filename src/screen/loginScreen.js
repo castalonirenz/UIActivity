@@ -4,6 +4,7 @@ import { Header, Left, Right, Icon } from "native-base";
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 class loginScreen extends Component {
+  
     static navigationOptions = {
        header: null
       };

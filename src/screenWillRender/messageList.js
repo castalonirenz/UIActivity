@@ -61,10 +61,12 @@ const styles = StyleSheet.create ({
        marginTop: 3,
        backgroundColor: 'white',
        width: "90%",
-        borderRadius: 25,
+       borderBottomWidth: 1,
+        borderBottomColor:"#D8D8D8"
     },
     viewContainer:{
         alignItems: "center",
+        backgroundColor:"white"
         
     },
     textMsg: {
