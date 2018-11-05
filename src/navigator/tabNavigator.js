@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
-import { View, Text,Platform } from 'react-native';
+import React, { Component } from "react";
+import { View, Text, Platform } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import {createBottomTabNavigator } from "react-navigation";
-import exploreScreen from '../screen/exploreScreen';
-import Saved from '../screen/savedScreen';
-import messageScreen from '../screen/messageScreen';
-
-
+import { createBottomTabNavigator } from "react-navigation";
+import exploreScreen from "../screen/exploreScreen";
+import Saved from "../screen/savedScreen";
+import messageScreen from "../screen/messageScreen";
 
 class tabNavigator extends Component {
-   
-
   render() {
     return (
       <View>
@@ -19,63 +15,89 @@ class tabNavigator extends Component {
     );
   }
 }
-export const TabStack = createBottomTabNavigator({
+export const TabStack = createBottomTabNavigator(
+  {
     Explore: {
-            screen: exploreScreen,
-      
-            navigationOptions: {
-              tabBarLabel: "Explore",
-              
-      
-              tabBarIcon: ({ tintColor }) => (
-                <Icon name={Platform.OS ==="android" ?"md-search" : "ios-search"} color={tintColor} size={24} />
-              )
+      screen: exploreScreen,
+
+      navigationOptions: {
+        tabBarLabel: "Explore",
+
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+            name={Platform.OS === "android" ? "md-search" : "ios-search"}
+            color={tintColor}
+            size={24}
+          />
+        )
+      }
+    },
+    Saved: {
+      screen: Saved,
+
+      navigationOptions: {
+        tabBarLabel: "Saved",
+
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+            name={
+              Platform.OS === "android"
+                ? "md-heart-outline"
+                : "ios-heart-outline"
             }
-          },
-          Saved: {
-            screen: Saved,
-      
-            navigationOptions: {
-              tabBarLabel: "Saved",
-      
-              tabBarIcon: ({ tintColor }) => (
-                <Icon name={Platform.OS === "android" ? "md-heart-outline": "ios-heart-outline"} color={tintColor} size={24} />
-              )
+            color={tintColor}
+            size={24}
+          />
+        )
+      }
+    },
+    Trips: {
+      screen: exploreScreen,
+
+      navigationOptions: {
+        tabBarLabel: "Trips",
+
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+            name={Platform.OS === "android" ? "md-plane" : "ios-plane"}
+            color={tintColor}
+            size={24}
+          />
+        )
+      }
+    },
+    Inbox: {
+      screen: messageScreen,
+
+      navigationOptions: {
+        tabBarLabel: "Inbox",
+
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+            name={
+              Platform.OS === "android" ? "md-chatbubbles" : "ios-chatbubbles"
             }
-          },
-          Trips: {
-            screen: exploreScreen,
-      
-            navigationOptions: {
-              tabBarLabel: "Trips",
-      
-              tabBarIcon: ({ tintColor }) => (
-                <Icon name={Platform.OS === "android"?"md-plane": "ios-plane"} color={tintColor} size={24} />
-              )
-            }
-          },
-          Inbox: {
-            screen: messageScreen,
-      
-            navigationOptions: {
-              tabBarLabel: "Inbox",
-      
-              tabBarIcon: ({ tintColor }) => (
-                <Icon name={Platform.OS==="android"?"md-chatbubbles":"ios-chatbubbles"} color={tintColor} size={24} />
-              )
-            }
-          },
-          Profile: {
-            screen: messageScreen,
-      
-            navigationOptions: {
-              tabBarLabel: "Profile",
-      
-              tabBarIcon: ({ tintColor }) => (
-                <Icon name={Platform.OS ==="android"?"md-contact":"ios-contact"} color={tintColor} size={24} />
-              )
-            }
-          }
+            color={tintColor}
+            size={24}
+          />
+        )
+      }
+    },
+    Profile: {
+      screen: messageScreen,
+
+      navigationOptions: {
+        tabBarLabel: "Profile",
+
+        tabBarIcon: ({ tintColor }) => (
+          <Icon
+            name={Platform.OS === "android" ? "md-contact" : "ios-contact"}
+            color={tintColor}
+            size={24}
+          />
+        )
+      }
+    }
   },
   {
     initialRouteName: "Explore",
@@ -96,5 +118,5 @@ export const TabStack = createBottomTabNavigator({
       showIcon: true
     }
   }
-  )
+);
 export default tabNavigator;
