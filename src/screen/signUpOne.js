@@ -46,11 +46,15 @@ class signUpOne extends Component {
         firstNameText: "",
         lastNameText: ""
       });
+
       this.props.addFirstLastName(
         this.state.firstNameText,
         this.state.lastNameText
       );
-      this.props.navigation.navigate("SignUpTwo");
+      this.props.navigation.navigate('SignUpTwo', {
+        firstname: this.state.firstNameText,
+        lastname: this.state.lastNameText
+      });
     }
 
     //  alert(this.state.lastNameText)

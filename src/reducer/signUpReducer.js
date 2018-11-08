@@ -19,6 +19,7 @@ const reducer = (state = initialState, action) =>{
             case SIGN_UP_TWO:
             return{
                 ...state,
+                
                 emailText: action.emailText
             }
 

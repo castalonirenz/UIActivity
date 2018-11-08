@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableHighlight
 } from "react-native";
 import { Header, Left, Right, Icon, DatePicker } from "native-base";
 import {connect} from 'react-redux'
@@ -16,6 +17,8 @@ class signUpLast extends Component {
   };
 
   state = {
+    firstNameText: "",
+    lastNameText: "",
     emailText: ""
   };
   Back = () => {
@@ -31,13 +34,23 @@ class signUpLast extends Component {
     this.setState({ chosenDate: newDate });
   }
   goToLogin = () => {
-    // alert("Registration Complete, Proceeding to Login");
-    // this.props.navigation.navigate("Login");
+     alert("Registration Complete, Proceeding to Login");
+     this.props.navigation.navigate("Login");
 
-    this.props.addBirthday(this.state.chosenDate);
+    this.props.addBirthday(this.state.firstNameText,this.state.lastNameText,
+      this.state.emailText,this.state.chosenDate.toString().substr(4, 12));
   };
 
   render() {
+    const { navigation } = this.props;
+    const firstname = navigation.getParam('firstname', 'No Firstname');
+    const lastname = navigation.getParam('lastname', 'No Lastname')
+    const email = navigation.getParam('email', 'No email')
+
+    this.state.firstNameText = firstname
+    this.state.lastNameText = lastname
+    this.state.emailText = email
+
     return (
       <View style={styles.container}>
         <Header style={{ backgroundColor: "#00A795" }}>
@@ -82,14 +95,17 @@ class signUpLast extends Component {
           </View>
          
           
-          <TouchableOpacity style={{ marginLeft: "75%" }}>
+          <TouchableOpacity
+            style={{ marginLeft: "75%" }}
+            onPress={this.goToLogin}
+          >
             <Ionicons
               name="ios-arrow-dropright-circle"
               color="white"
               size={50}
-              onPress={this.goToLogin}
             />
           </TouchableOpacity>
+
         </View>
       </View>
     );
@@ -134,7 +150,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch=>{
   return{
-    addBirthday: (birthday) => dispatch(signUpLastAction(birthday))
+    addBirthday: (fname,lname,email,birthday) => dispatch(signUpLastAction(fname,lname,email,birthday))
   }
 }
 
