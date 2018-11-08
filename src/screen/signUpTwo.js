@@ -10,6 +10,9 @@ import {
 import { Header, Left, Right, Icon } from "native-base";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+
+import {signUpTwoAction} from '../actions/signUp'
+import {connect} from 'react-redux'
 class signUpTwo extends Component {
   static navigationOptions = {
     header: null
@@ -38,7 +41,11 @@ class signUpTwo extends Component {
         emailText: ""
       });
       this.props.navigation.navigate("SignUpLast");
+      
+      this.props.addEmail(this.state.emailText)
     }
+
+    
   };
 
   render() {
@@ -97,6 +104,12 @@ class signUpTwo extends Component {
   }
 }
 
+const mapToDispatchToProps = dispatch =>{
+  return{
+    addEmail:(email) => dispatch(signUpTwoAction(email))
+  }
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -130,5 +143,4 @@ const styles = StyleSheet.create({
     width: "80%"
   }
 });
-
-export default signUpTwo;
+export default connect(null, mapToDispatchToProps)(signUpTwo);

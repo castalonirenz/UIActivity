@@ -7,8 +7,9 @@ import {
   TouchableOpacity
 } from "react-native";
 import { Header, Left, Right, Icon, DatePicker } from "native-base";
-
+import {connect} from 'react-redux'
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { signUpLastAction } from "../actions/signUp";
 class signUpLast extends Component {
   static navigationOptions = {
     header: null
@@ -30,8 +31,10 @@ class signUpLast extends Component {
     this.setState({ chosenDate: newDate });
   }
   goToLogin = () => {
-    alert("Registration Complete, Proceeding to Login");
-    this.props.navigation.navigate("Login");
+    // alert("Registration Complete, Proceeding to Login");
+    // this.props.navigation.navigate("Login");
+
+    this.props.addBirthday(this.state.chosenDate);
   };
 
   render() {
@@ -65,10 +68,11 @@ class signUpLast extends Component {
             minimumDate={new Date(1950, 1, 1)}
             maximumDate={new Date(2018, 12, 31)}
             locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
+            
+            timeZoneOffsetInMinutes={false}
             modalTransparent={false}
             animationType={"fade"}
-            androidMode={"default"}
+            androidMode={"calendar"}
             placeHolderText="Select date"
             textStyle={{ color: "white" }}
             placeHolderTextStyle={{ color: "#d3d3d3" }}
@@ -128,4 +132,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default signUpLast;
+const mapDispatchToProps = dispatch=>{
+  return{
+    addBirthday: (birthday) => dispatch(signUpLastAction(birthday))
+  }
+}
+
+export default connect(null,mapDispatchToProps) (signUpLast);

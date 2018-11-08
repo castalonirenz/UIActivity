@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
 import { Header, Left, Right, Icon } from "native-base";
 
@@ -58,14 +59,17 @@ class loginScreen extends Component {
 
   render() {
     return (
+      
       <View style={styles.container}>
         <Header style={{ backgroundColor: "#00A795" }}>
           <Left style={{ marginRight: "80%" }}>
             <Icon name="ios-arrow-back" onPress={this.Back} />
           </Left>
         </Header>
+        
         <View style={styles.MainContainer}>
           <View style={styles.secondContainer}>
+         
             <Text style={styles.textDesign}>Login</Text>
           </View>
           <Text style={{ marginRight: "67%", color: "white", marginTop: 15 }}>
@@ -106,7 +110,9 @@ class loginScreen extends Component {
             />
           </TouchableOpacity>
         </View>
+        
       </View>
+      
     );
   }
 }
@@ -114,7 +120,8 @@ class loginScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#00A795"
+    backgroundColor: "#00A795",
+   
   },
   MainContainer: {
     flex: 1,

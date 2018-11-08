@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from "react-navigation";
 import exploreScreen from "../screen/exploreScreen";
 import Saved from "../screen/savedScreen";
 import messageScreen from "../screen/messageScreen";
+import MapScreen from "../screen/mapScreen";
 
 class tabNavigator extends Component {
   render() {
@@ -52,7 +53,7 @@ export const TabStack = createBottomTabNavigator(
       }
     },
     Trips: {
-      screen: exploreScreen,
+      screen: MapScreen,
 
       navigationOptions: {
         tabBarLabel: "Trips",
