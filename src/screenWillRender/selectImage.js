@@ -1,60 +1,50 @@
-import React, { Component } from "react";
-import { View, Image, Button, StyleSheet } from "react-native";
-import ImagePicker from "react-native-image-picker";
+// import React, { Component } from "react";
+// import { View, Image, Button, StyleSheet } from "react-native";
+// import ImagePicker from "react-native-image-picker";
+// import {connect} from 'react-redux'
+// import {addPlace} from '../actions/addPlace'
+// class selectImage extends Component {
+//   state = {
+    
+//   }
 
-class selectImage extends Component {
-  state = {
-    pickedImaged: null
-  }
 
-  pickImageHandler = () => {
-    ImagePicker.showImagePicker({title: "Pick an Image"}, res => {
-      if (res.didCancel) {
-        console.log("User cancelled!");
-      } else if (res.error) {
-        console.log("Error", res.error);
-      } else {
-        this.setState({
-          pickedImaged: { uri: res.uri }
-        });
-       // this.props.onImagePicked({uri: res.uri, base64: res.data});
-      }
-    });
-  }
+//   render() {
+//     return (
+//       <View style={styles.container}>
+        
+//       </View>
+//     );
+//   }
+// }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.placeholder}>
-          <Image source={this.state.pickedImaged} style={styles.previewImage} />
-        </View>
-        <View style={styles.button}>
-          <Button title="Pick Image" onPress={this.pickImageHandler} />
-        </View>
-      </View>
-    );
-  }
-}
+// const mapDispatchToProps = dispatch =>{
+//   return{
+//     addLocation:(location,image,text) => dispatch(addPlace(location,image,text))
+//   }
+// }
+// export default connect(null,mapDispatchToProps) (selectImage);
 
-const styles = StyleSheet.create({
-    container: {
-        width: "100%",
-        alignItems: "center"
-    },
-    placeholder: {
-      borderWidth: 1,
-      borderColor: "black",
-      backgroundColor: "#eee",
-      width: "80%",
-      height: 150
-    },
-    button: {
-      margin: 8
-    },
-    previewImage: {
-        width: "100%",
-        height: "100%"
-    }
-  });
 
-export default selectImage;
+// const styles = StyleSheet.create({
+//     container: {
+//         width: "100%",
+//         alignItems: "center"
+//     },
+//     placeholder: {
+//       borderWidth: 1,
+//       borderColor: "black",
+//       backgroundColor: "#eee",
+//       width: "80%",
+//       height: 150
+//     },
+//     button: {
+//       margin: 8
+//     },
+//     previewImage: {
+//         width: "100%",
+//         height: "100%"
+//     }
+//   });
+
+

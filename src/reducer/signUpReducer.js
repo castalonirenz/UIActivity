@@ -7,7 +7,7 @@ const initialState = {
     birthText: null
 };
 
-const reducer = (state = initialState, action) =>{
+const signUpReducer = (state = initialState, action) =>{
     switch(action.type){
         case SIGN_UP_ONE:
             return{
@@ -33,4 +33,4 @@ const reducer = (state = initialState, action) =>{
     }
 }
 
-export default reducer;
+export default signUpReducer;

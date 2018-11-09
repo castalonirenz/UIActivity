@@ -127,6 +127,25 @@ class signUpLast extends Component {
   }
 }
 
+const mapStateToProps = state =>{
+  return{
+    firstname: state.signup.firstNameText,
+    lastname: state.signup.lastNameText,
+    email: state.signup.emailText,
+    isLoading: state.ui.isLoading
+    
+  }
+
+}
+
+const mapDispatchToProps = dispatch=>{
+  return{
+    addAll: (fname,lname,email,birthday) => dispatch(signUpLastAction(fname,lname,email,birthday))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps) (signUpLast);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -163,21 +182,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state =>{
-  return{
-    firstname: state.signup.firstNameText,
-    lastname: state.signup.lastNameText,
-    email: state.signup.emailText,
-    isLoading: state.ui.isLoading
-    
-  }
 
-}
 
-const mapDispatchToProps = dispatch=>{
-  return{
-    addAll: (fname,lname,email,birthday) => dispatch(signUpLastAction(fname,lname,email,birthday))
-  }
-}
 
-export default connect(mapStateToProps,mapDispatchToProps) (signUpLast);
