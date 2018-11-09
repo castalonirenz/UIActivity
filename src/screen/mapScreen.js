@@ -14,6 +14,7 @@ class MapScreen extends Component {
       <ScrollView >
         <MapRender/>
         
+        
 
       </ScrollView >
     );

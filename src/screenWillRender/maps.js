@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity
 } from "react-native";
-
+import PickImage from './selectImage'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MapView from "react-native-maps";
 
@@ -99,6 +99,8 @@ class PickLocation extends Component {
           <Button title="Locate Me" onPress={this.getLocationHandler} />
         </View>
 
+         <PickImage/>
+
          <TextInput
             style={styles.textInputDesign}
             onChangeText={text => this.placeInput(text)}
@@ -106,6 +108,8 @@ class PickLocation extends Component {
             placeholder="What's in your mind?"
             underlineColorAndroid="white"
           />
+
+         
 
           <Text style={styles.textDesign}>Share your location</Text>
 
