@@ -5,12 +5,18 @@ import {
   Button,
   StyleSheet,
   Text,
-  Dimensions
+  Dimensions,
+  TextInput,
+  TouchableOpacity
 } from "react-native";
+
+import Icon from 'react-native-vector-icons/Ionicons'
 import MapView from "react-native-maps";
 
 class PickLocation extends Component {
   state = {
+    place: "",
+
     focusedLocation: {
       latitude: 14.5548 ,
       longitude: 121.0476,
@@ -21,6 +27,16 @@ class PickLocation extends Component {
         0.0122
     },
     locationChosen: false
+  };
+
+  sharePlace = () =>{
+   // alert(this.state.place+"\n"+this.state.focusedLocation.latitude + "\n "+ this.state.focusedLocation.longitude)
+  }
+
+  placeInput = value => {
+    this.setState({
+      place: value
+    });
   };
 
   pickLocationHandler = event => {
@@ -82,6 +98,24 @@ class PickLocation extends Component {
         <View style={styles.button}>
           <Button title="Locate Me" onPress={this.getLocationHandler} />
         </View>
+
+         <TextInput
+            style={styles.textInputDesign}
+            onChangeText={text => this.placeInput(text)}
+            value={this.state.place}
+            placeholder="What's in your mind?"
+            underlineColorAndroid="white"
+          />
+
+          <Text style={styles.textDesign}>Share your location</Text>
+
+          <TouchableOpacity onPress={this.sharePlace}>
+            <Icon name="md-share-alt" size={30} color ="blue"></Icon>
+          </TouchableOpacity>
+
+
+
+
       </View>
     );
   }
@@ -92,12 +126,22 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center"
   },
+  textInputDesign: {
+    width: "80%",
+    borderColor:"blue",
+    borderWidth: 0.5
+  },
   map: {
     width: "100%",
     height: 250
   },
   button: {
     margin: 8
+  },
+  textDesign:{
+    color: "black",
+    fontWeight: 'bold',
+    fontSize: 16
   }
 });
 

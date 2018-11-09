@@ -3,9 +3,10 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
+  ActivityIndicator,
   TouchableOpacity,
-  TouchableHighlight
+  Alert
+  
 } from "react-native";
 import { Header, Left, Right, Icon, DatePicker } from "native-base";
 import {connect} from 'react-redux'
@@ -33,23 +34,45 @@ class signUpLast extends Component {
   setDate(newDate) {
     this.setState({ chosenDate: newDate });
   }
-  goToLogin = () => {
-     alert("Registration Complete, Proceeding to Login");
-     this.props.navigation.navigate("Login");
 
-    this.props.addBirthday(this.state.firstNameText,this.state.lastNameText,
-      this.state.emailText,this.state.chosenDate.toString().substr(4, 12));
+  goToLogin = () => {
+    const addAll = this.props.addAll(this.props.firstname,this.props.lastname,
+      this.props.email,this.state.chosenDate.toString().substr(4, 12));
+    Alert.alert(
+      'Hi',
+      'Sign up successful, proceeding to log in', 
+      [
+        {text: 'OK', onPress: () => 
+        this.props.navigation.navigate("Login"),
+        addAll
+        },
+      ],
+      { cancelable: false }
+    )
+    //  alert("Registration Complete, Proceeding to Login");
+    //  this.props.navigation.navigate("Login");
+
+    
   };
 
+  
   render() {
-    const { navigation } = this.props;
-    const firstname = navigation.getParam('firstname', 'No Firstname');
-    const lastname = navigation.getParam('lastname', 'No Lastname')
-    const email = navigation.getParam('email', 'No email')
+    let signUpSubmit =(
+      <TouchableOpacity
+      style={{ marginLeft: "75%" }}
+      onPress={this.goToLogin}
+    >
+      <Ionicons
+        name="ios-arrow-dropright-circle"
+        color="white"
+        size={50}
+      />
+    </TouchableOpacity>
+    );
 
-    this.state.firstNameText = firstname
-    this.state.lastNameText = lastname
-    this.state.emailText = email
+    if (this.props.isLoading) {
+      signUpSubmit = <ActivityIndicator />;
+    }
 
     return (
       <View style={styles.container}>
@@ -93,18 +116,10 @@ class signUpLast extends Component {
           />
            <Text>Date: {this.state.chosenDate.toString().substr(4, 12)}</Text>
           </View>
-         
+
+         {signUpSubmit}
           
-          <TouchableOpacity
-            style={{ marginLeft: "75%" }}
-            onPress={this.goToLogin}
-          >
-            <Ionicons
-              name="ios-arrow-dropright-circle"
-              color="white"
-              size={50}
-            />
-          </TouchableOpacity>
+         
 
         </View>
       </View>
@@ -148,10 +163,21 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = state =>{
+  return{
+    firstname: state.signup.firstNameText,
+    lastname: state.signup.lastNameText,
+    email: state.signup.emailText,
+    isLoading: state.ui.isLoading
+    
+  }
+
+}
+
 const mapDispatchToProps = dispatch=>{
   return{
-    addBirthday: (fname,lname,email,birthday) => dispatch(signUpLastAction(fname,lname,email,birthday))
+    addAll: (fname,lname,email,birthday) => dispatch(signUpLastAction(fname,lname,email,birthday))
   }
 }
 
-export default connect(null,mapDispatchToProps) (signUpLast);
+export default connect(mapStateToProps,mapDispatchToProps) (signUpLast);

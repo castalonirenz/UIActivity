@@ -1,2 +1,3 @@
-export { signUpOne} from './signUpOne'
+//export { signUpOne} from './signUp'
+export {uiStartLoading,uiStopLoading} from './activityIndicator'
 

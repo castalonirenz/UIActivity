@@ -2,9 +2,11 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 
 import signUpReducer from './reducer/signUpReducer'
 import thunk from 'redux-thunk';
+import uiReducer from './reducer/activityIndicator'
 
 const rootReducer = combineReducers({
     signup: signUpReducer,
+    ui: uiReducer
 
 });
 let composeEnhancers = compose;

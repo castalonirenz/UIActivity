@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import {ScrollView } from 'react-native';
 import MapRender from '../../src/screenWillRender/maps'
+
 class MapScreen extends Component {
   constructor(props) {
     super(props);
@@ -10,9 +11,11 @@ class MapScreen extends Component {
 
   render() {
     return (
-      <View>
+      <ScrollView >
         <MapRender/>
-      </View>
+        
+
+      </ScrollView >
     );
   }
 }

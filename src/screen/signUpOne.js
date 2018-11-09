@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import {signUpOneAction} from '../actions/signUp'
+import { signUpOneAction } from "../actions/signUp";
 
 import {
   View,
@@ -51,10 +51,7 @@ class signUpOne extends Component {
         this.state.firstNameText,
         this.state.lastNameText
       );
-      this.props.navigation.navigate('SignUpTwo', {
-        firstname: this.state.firstNameText,
-        lastname: this.state.lastNameText
-      });
+      this.props.navigation.navigate("SignUpTwo");
     }
 
     //  alert(this.state.lastNameText)
@@ -68,7 +65,6 @@ class signUpOne extends Component {
       <View style={styles.container}>
         <Header style={{ backgroundColor: "#00A795" }}>
           <Left style={{ marginRight: "80%" }}>
-            
             <Icon name="ios-arrow-back" onPress={this.Back} />
           </Left>
         </Header>
@@ -116,6 +112,14 @@ class signUpOne extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    addFirstLastName: (fname, lname) => dispatch(signUpOneAction(fname, lname))
+  };
+};
+
+export default connect(null,mapDispatchToProps)(signUpOne);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -149,14 +153,3 @@ const styles = StyleSheet.create({
     width: "80%"
   }
 });
-
-const mapDispatchToProps = dispatch => {
-  return {
-    addFirstLastName: (fname, lname) => dispatch(signUpOneAction(fname, lname))
-  };
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(signUpOne);

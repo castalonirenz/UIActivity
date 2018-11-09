@@ -11,32 +11,21 @@ import { Header, Left, Right, Icon } from "native-base";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import {signUpTwoAction} from '../actions/signUp'
-import {connect} from 'react-redux'
-
-
+import { signUpTwoAction } from "../actions/signUp";
+import { connect } from "react-redux";
 
 // const { navigation } = this.props;
 // const firstname = navigation.getParam('firstname', 'No Firstname');
 // const lastname = navigation.getParam('lastname', 'No Lastname')
 
-
 class signUpTwo extends Component {
-
-
-
-
-  
-
   static navigationOptions = {
     header: null
   };
 
   state = {
-    
     emailText: "",
-    firstNameText: "",
-    lastNameText : "",
+
     isSwitchOn: false
   };
 
@@ -57,27 +46,13 @@ class signUpTwo extends Component {
       this.setState({
         emailText: ""
       });
-      this.props.navigation.navigate('SignUpLast',{
-        firstname: this.state.firstNameText,
-        lastname:this.state.lastNameText,
-        email: this.state.emailText
-      });
-      
-      this.props.addEmail(this.state.emailText)
+      this.props.navigation.navigate("SignUpLast");
 
+      this.props.addEmail(this.state.emailText);
     }
-
-    
   };
 
   render() {
-    
-  const { navigation } = this.props;
-  const firstname = navigation.getParam('firstname', 'No Firstname');
-  const lastname = navigation.getParam('lastname', 'No Lastname')
-
-  this.state.firstNameText = firstname
-  this.state.lastNameText = lastname
     return (
       <View style={styles.container}>
         <Header style={{ backgroundColor: "#00A795" }}>
@@ -114,7 +89,8 @@ class signUpTwo extends Component {
 
             <Switch
               onValueChange={isSwitchOn => this.setState({ isSwitchOn })}
-              value={this.state.isSwitchOn} onTintColor="yellow"
+              value={this.state.isSwitchOn}
+              onTintColor="yellow"
             />
           </View>
 
@@ -134,7 +110,15 @@ class signUpTwo extends Component {
   }
 }
 
-
+const mapToDispatchToProps = dispatch => {
+  return {
+    addEmail: email => dispatch(signUpTwoAction(email))
+  };
+};
+export default connect(
+  null,
+  mapToDispatchToProps
+)(signUpTwo);
 
 const styles = StyleSheet.create({
   container: {
@@ -169,10 +153,3 @@ const styles = StyleSheet.create({
     width: "80%"
   }
 });
-
-const mapToDispatchToProps = dispatch =>{
-  return{
-    addEmail:(email) => dispatch(signUpTwoAction(email))
-  }
-}
-export default connect(null, mapToDispatchToProps)(signUpTwo);

@@ -1,4 +1,5 @@
 import {SIGN_UP_ONE,SIGN_UP_TWO,SIGN_UP_LAST} from './actionTypes'
+import {uiStartLoading,uiStopLoading} from './index'
 
 
 
@@ -13,12 +14,10 @@ export const signUpOneAction = (firstNameText, lastNameText) =>{
     }
 
 
-export const signUpTwoAction = (firstnameText,lastNameText,emailText) =>{
+export const signUpTwoAction = (emailText) =>{
     return  {
     
             type: SIGN_UP_TWO,
-            firstnameText: firstnameText,
-            lastNameText: lastNameText,
             emailText: emailText
     }
         
@@ -27,6 +26,7 @@ export const signUpTwoAction = (firstnameText,lastNameText,emailText) =>{
 
 export const signUpLastAction = (Firstname,Lastname,Email,Birthday) =>{
     return dispatch => {
+        dispatch(uiStartLoading());
         const SaveToFireBase = {
             type: SIGN_UP_LAST,
             Firstname: Firstname,
@@ -41,6 +41,7 @@ export const signUpLastAction = (Firstname,Lastname,Email,Birthday) =>{
         .catch(err => console.log(err))
         .then(res => res.json())
         .then(parsedRes => {
+            dispatch(uiStopLoading());
             console.log(parsedRes)
         })
 
