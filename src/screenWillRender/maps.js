@@ -7,13 +7,14 @@ import {
   Text,
   Dimensions,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 //import PickImage from './selectImage'
 
 import ImagePicker from "react-native-image-picker";
-import {connect} from 'react-redux'
-import {addPlace} from '../actions/addPlace'
+import { connect } from 'react-redux'
+import { addPlace } from '../actions/addPlace'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MapView from "react-native-maps";
 
@@ -22,16 +23,16 @@ class PickLocation extends Component {
     placeText: "",
     pickedImaged: null,
 
-    controls:{
-      image :{
+    controls: {
+      image: {
         value: null,
         valid: false,
       }
     },
-  
+
 
     focusedLocation: {
-      latitude: 14.5548 ,
+      latitude: 14.5548,
       longitude: 121.0476,
       latitudeDelta: 0.0122,
       longitudeDelta:
@@ -42,11 +43,12 @@ class PickLocation extends Component {
     locationChosen: false
   };
 
-  sharePlace = () =>{
-   alert(this.state.placeText+"\n"+this.state.focusedLocation.latitude + "\n "+ 
-   this.state.focusedLocation.longitude + "\n"+ this.state.controls.image.value)
+  sharePlace = () => {
+    //  alert(this.state.placeText+"\n"+this.state.focusedLocation.latitude + "\n "+ 
+    //  this.state.focusedLocation.longitude + "\n"+ this.state.controls.image.value)
 
-   // this.props.addAll(this.props.firstname,this.props.lastname)
+    this.props.addAll(this.state.focusedLocation.latitude,
+      this.state.controls.image.value, this.state.focusedLocation.longitude, this.state.placeText)
   }
 
   placeInput = value => {
@@ -55,7 +57,7 @@ class PickLocation extends Component {
     });
   };
 
-   imagePickedHandler = image => {
+  imagePickedHandler = image => {
     this.setState(prevState => {
       return {
         controls: {
@@ -68,9 +70,9 @@ class PickLocation extends Component {
       };
     });
   }
-  
+
   pickImageHandler = () => {
-    ImagePicker.showImagePicker({title: "Pick an Image"}, res => {
+    ImagePicker.showImagePicker({ title: "Pick an Image" }, res => {
       if (res.didCancel) {
         console.log("User cancelled!");
       } else if (res.error) {
@@ -79,8 +81,8 @@ class PickLocation extends Component {
         this.setState({
           pickedImaged: { uri: res.uri }
         });
-        this.imagePickedHandler({uri: res.uri, base64: res.data});
-      
+        this.imagePickedHandler({ uri: res.uri, base64: res.data });
+
       }
     });
   }
@@ -116,14 +118,23 @@ class PickLocation extends Component {
       };
       this.pickLocationHandler(coordsEvent);
     },
-  err => {
-    console.log(err);
-    alert("Fetching the Position failed, please pick one manually!");
-  })
+      err => {
+        console.log(err);
+        alert("Fetching the Position failed, please pick one manually!");
+      })
   }
 
   render() {
     let marker = null;
+    let addPlaceDetails = (
+      <TouchableOpacity onPress={this.sharePlace}>
+        <Icon name="md-share-alt" size={30} color="blue"></Icon>
+      </TouchableOpacity>
+    )
+
+    if (this.props.isLoading) {
+      addPlaceDetails = <ActivityIndicator />;
+    }
 
     if (this.state.locationChosen) {
       marker = <MapView.Marker coordinate={this.state.focusedLocation} />;
@@ -133,7 +144,7 @@ class PickLocation extends Component {
       <View style={styles.container}>
         <MapView
           showsTraffic={true}
-          showsBuildings = {true}
+          showsBuildings={true}
           initialRegion={this.state.focusedLocation}
           style={styles.map}
           onPress={this.pickLocationHandler}
@@ -145,8 +156,8 @@ class PickLocation extends Component {
           <Button title="Locate Me" onPress={this.getLocationHandler} />
         </View>
 
-         {/* <PickImage/> */}
-         <View style={styles.placeholder}>
+        {/* <PickImage/> */}
+        <View style={styles.placeholder}>
           <Image source={this.state.pickedImaged} style={styles.previewImage} />
         </View>
         <View style={styles.button}>
@@ -154,21 +165,19 @@ class PickLocation extends Component {
         </View>
 
 
-         <TextInput
-            style={styles.textInputDesign}
-            onChangeText={text => this.placeInput(text)}
-            value={this.state.placeText}
-            placeholder="Tell me your experience"
-            underlineColorAndroid="white"
-          />
+        <TextInput
+          style={styles.textInputDesign}
+          onChangeText={text => this.placeInput(text)}
+          value={this.state.placeText}
+          placeholder="Tell me your experience"
+          underlineColorAndroid="white"
+        />
 
-         
 
-          <Text style={styles.textDesign}>Share your location</Text>
 
-          <TouchableOpacity onPress={this.sharePlace}>
-            <Icon name="md-share-alt" size={30} color ="blue"></Icon>
-          </TouchableOpacity>
+        <Text style={styles.textDesign}>Share your location</Text>
+
+        {addPlaceDetails}
 
 
 
@@ -178,12 +187,12 @@ class PickLocation extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>{
-  return{
-    addLocation:(location,image,text) => dispatch(addPlace(location,image,text))
+const mapDispatchToProps = dispatch => {
+  return {
+    addAll: (lat, image, long, message) => dispatch(addPlace(lat, image, long, message))
   }
 }
-export default connect(null,mapDispatchToProps) (PickLocation);
+export default connect(null, mapDispatchToProps)(PickLocation);
 
 const styles = StyleSheet.create({
   container: {
@@ -198,12 +207,12 @@ const styles = StyleSheet.create({
     height: 150
   },
   previewImage: {
-            width: "100%",
-            height: "100%"
-         },
+    width: "100%",
+    height: "100%"
+  },
   textInputDesign: {
     width: "80%",
-    borderColor:"blue",
+    borderColor: "blue",
     borderWidth: 0.5
   },
   map: {
@@ -213,7 +222,7 @@ const styles = StyleSheet.create({
   button: {
     margin: 8
   },
-  textDesign:{
+  textDesign: {
     color: "black",
     fontWeight: 'bold',
     fontSize: 16
