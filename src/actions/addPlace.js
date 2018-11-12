@@ -1,8 +1,8 @@
-import {ADD_PLACE} from './actionTypes'
-import {uiStartLoading, uiStopLoading} from './activityIndicator'
+import {ADD_PLACE, SET_PLACES, REMOVE_PLACE} from './actionTypes'
+import {uiStartLoading,uiStopLoading} from './index'
 
 
-export const addPlace = (lat,image,long,message) =>{
+export const addPlace = (latLocation,longLocation,image,message) =>{
     return dispatch => {
         dispatch(uiStartLoading());
         fetch("https://us-central1-ordinal-tractor-221702.cloudfunctions.net/storeImage",{
@@ -21,9 +21,9 @@ export const addPlace = (lat,image,long,message) =>{
            
             const placeData ={
                 type: ADD_PLACE,
-                latLocation: lat,
+                lattitude: latLocation,
+                longtitude:longLocation,
                 image: parsedRes.imageUrl,
-                longLocation: long,
                 message: message
             };
             return fetch("https://ordinal-tractor-221702.firebaseio.com/place.json",{
@@ -31,7 +31,7 @@ export const addPlace = (lat,image,long,message) =>{
                 body: JSON.stringify(placeData),
                
             },
-            alert("Place added!"))
+           )
          
 
         })
@@ -44,7 +44,66 @@ export const addPlace = (lat,image,long,message) =>{
        .then(parsedRes =>{
            console.log(parsedRes);
            dispatch(uiStopLoading())
+           alert("Place added!")
        })
-
+     
     }
 }
+export const setPlaces = places => {
+    return {
+        type: SET_PLACES,
+        places: places
+    };
+};
+
+export const getPlaces = () => {
+    console.log("pumasok sa get places")
+    return dispatch => {
+        fetch("https://ordinal-tractor-221702.firebaseio.com/place.json")
+        .catch(err => {
+            alert("Something went wrong, sorry :/");
+            console.log(err);
+        })
+        .then(res => res.json())
+        
+        .then(parsedRes => {
+            // console.log(parsedRes)
+            const places = [];
+            for (let key in parsedRes) {
+                places.push({
+                    ...parsedRes[key],
+                    // image: {
+                    //     uri: parsedRes[key].image
+                    // },
+                    key: key
+                });
+            }
+            dispatch(setPlaces(places));
+        });
+    };
+};
+
+export const deletePlace = (key) => {
+    return dispatch => {
+        dispatch(removePlace(key));
+        fetch("https://ordinal-tractor-221702.firebaseio.com/place" + key + ".json", {
+            method: "DELETE"
+        })
+        .catch(err => {
+            alert("Something went wrong, sorry :/");
+            console.log(err);
+        })
+        .then(res => res.json())
+        .then(parsedRes => {
+            console.log("Done!");
+        });
+    };
+};
+
+export const removePlace = key => {
+    return {
+        type: REMOVE_PLACE,
+        key: key
+    };
+};
+

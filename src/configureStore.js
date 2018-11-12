@@ -3,10 +3,12 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import signUpReducer from './reducer/signUpReducer'
 import thunk from 'redux-thunk';
 import uiReducer from './reducer/activityIndicator'
+import placesReduer from './reducer/addPlace'
 
 const rootReducer = combineReducers({
     signup: signUpReducer,
-    ui: uiReducer
+    ui: uiReducer,
+    selectPlace: placesReduer
 
 });
 let composeEnhancers = compose;

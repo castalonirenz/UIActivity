@@ -27,6 +27,10 @@ class PickLocation extends Component {
       image: {
         value: null,
         valid: false,
+      },
+      location:{
+        value: null,
+        valid: false
       }
     },
 
@@ -38,7 +42,7 @@ class PickLocation extends Component {
       longitudeDelta:
         Dimensions.get("window").width /
         Dimensions.get("window").height *
-        0.0122
+        0.0522
     },
     locationChosen: false
   };
@@ -46,9 +50,9 @@ class PickLocation extends Component {
   sharePlace = () => {
     //  alert(this.state.placeText+"\n"+this.state.focusedLocation.latitude + "\n "+ 
     //  this.state.focusedLocation.longitude + "\n"+ this.state.controls.image.value)
-
-    this.props.addAll(this.state.focusedLocation.latitude,
-      this.state.controls.image.value, this.state.focusedLocation.longitude, this.state.placeText)
+    // alert(this.state.focusedLocation.latitude + this.state.)
+    this.props.addAll(this.state.focusedLocation.latitude,this.state.focusedLocation.longitude,
+      this.state.controls.image.value, this.state.placeText)
   }
 
   placeInput = value => {
@@ -87,6 +91,8 @@ class PickLocation extends Component {
     });
   }
 
+  
+
   pickLocationHandler = event => {
     const coords = event.nativeEvent.coordinate;
     this.map.animateToRegion({
@@ -104,7 +110,10 @@ class PickLocation extends Component {
         locationChosen: true
       };
     });
+  
+   
   };
+
 
   getLocationHandler = () => {
     navigator.geolocation.getCurrentPosition(pos => {
@@ -137,10 +146,11 @@ class PickLocation extends Component {
     }
 
     if (this.state.locationChosen) {
-      marker = <MapView.Marker coordinate={this.state.focusedLocation} />;
+      marker = <MapView.Marker coordinate={this.state.focusedLocation}  />;
     }
 
     return (
+
       <View style={styles.container}>
         <MapView
           showsTraffic={true}
@@ -149,6 +159,7 @@ class PickLocation extends Component {
           style={styles.map}
           onPress={this.pickLocationHandler}
           ref={ref => this.map = ref}
+          
         >
           {marker}
         </MapView>
@@ -160,6 +171,7 @@ class PickLocation extends Component {
         <View style={styles.placeholder}>
           <Image source={this.state.pickedImaged} style={styles.previewImage} />
         </View>
+
         <View style={styles.button}>
           <Button title="Pick Image" onPress={this.pickImageHandler} />
         </View>
@@ -187,12 +199,19 @@ class PickLocation extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapStateToProps = state => {
   return {
-    addAll: (lat, image, long, message) => dispatch(addPlace(lat, image, long, message))
+    isLoading: state.ui.isLoading
   }
 }
-export default connect(null, mapDispatchToProps)(PickLocation);
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addAll: (latLocation,longLocation,image,message) => 
+    dispatch(addPlace(latLocation,longLocation, image,  message))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(PickLocation);
 
 const styles = StyleSheet.create({
   container: {

@@ -12,6 +12,7 @@ class messageList extends Component {
   render() {
     return (
       <View style={styles.viewContainer}>
+       
         {this.state.msgDetails.map((item, index) => (
           <TouchableOpacity
             key={item.id}
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#D8D8D8"
   },
   viewContainer: {
+    flex: 1,
     alignItems: "center",
     backgroundColor: "white"
   },

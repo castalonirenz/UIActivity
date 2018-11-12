@@ -3,9 +3,11 @@ import { View, Text, Platform } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "react-navigation";
 import exploreScreen from "../screen/exploreScreen";
-import Saved from "../screen/savedScreen";
+import MommentScreen from '../screen/momentScreen'
+
 import messageScreen from "../screen/messageScreen";
 import MapScreen from "../screen/mapScreen";
+
 
 class tabNavigator extends Component {
   render() {
@@ -34,7 +36,7 @@ export const TabStack = createBottomTabNavigator(
       }
     },
     Saved: {
-      screen: Saved,
+      screen: MommentScreen,
 
       navigationOptions: {
         tabBarLabel: "Saved",

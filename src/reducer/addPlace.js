@@ -1,10 +1,15 @@
-import {ADD_PLACE} from '../actions/actionTypes'
+import {ADD_PLACE,SET_PLACES, REMOVE_PLACE} from '../actions/actionTypes'
+import { ActionSheet } from 'native-base';
 
 const initialState = {
 
-    location: null,
+    
     image: null,
-    text: null
+    text: null,
+    latLocation: null,
+    longLocation: null,
+    places: []
+
 
 }
 
@@ -13,13 +18,28 @@ const addPlaceReducer = (state = initialState, action) =>{
         case ADD_PLACE:
         return{
             ...state,
-            location: locationText,
-            image: imageText,
-            text: text
+            latLocation: latLocation,
+            longLocation: longLocation,
+            image: image,
+            text: message
+        };
+        case SET_PLACES:
+        return{
+            ...state,
+            places: action.places
         }
+        case REMOVE_PLACE:
+        return {
+        ...state,
+        places: state.places.filter(places => {
+          return places.key !== action.key;
+        })
+      };
         default:
         return state;
     }
 }
+
+
 
 export default addPlaceReducer

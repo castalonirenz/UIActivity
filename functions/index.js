@@ -4,14 +4,20 @@ const fs = require("fs");
 const UUID = require("uuid-v4");
 const {Storage} = require('@google-cloud/storage');
 
-const storage = new Storage({
+// const storage = new Storage({
 
-})
+// })
 const gcconfig = new Storage({
   projectId: "ordinal-tractor-221702",
   keyFilename: "myFirebaseID.json"
 });
 
+// const gcconfig = {
+//   projectId: "ordinal-tractor-221702",
+//   keyFilename: "myFirebaseID.json"
+// };
+
+// const gcs =new Storage(gcconfig);
 //const gcs = (Storage)(gcconfig);
 
 // // Create and Deploy Your First Cloud Functions
@@ -31,7 +37,7 @@ exports.storeImage = functions.https.onRequest((request, response) => {
       "/tmp/uploaded-image.jpg",
       {
         uploadType: "media",
-        destination: "/places/" + uuid + ".jpg",
+        destination: "/happyPlaces/" + uuid + ".jpg",
         metadata: {
           metadata: {
             contentType: "image/jpeg",

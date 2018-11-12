@@ -58,6 +58,7 @@ class loginScreen extends Component {
   };
 
   render() {
+    console.log("the app started")
     return (
       
       <View style={styles.container}>
@@ -114,6 +115,9 @@ class loginScreen extends Component {
       </View>
       
     );
+  }
+  componentDidMount(){
+    
   }
 }
 
