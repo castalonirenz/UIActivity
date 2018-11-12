@@ -1,5 +1,5 @@
 import {ADD_PLACE,SET_PLACES, REMOVE_PLACE} from '../actions/actionTypes'
-import { ActionSheet } from 'native-base';
+
 
 const initialState = {
 
@@ -31,8 +31,8 @@ const addPlaceReducer = (state = initialState, action) =>{
         case REMOVE_PLACE:
         return {
         ...state,
-        places: state.places.filter(places => {
-          return places.key !== action.key;
+        places: state.places.filter(place => {
+          return place.key !== action.key;
         })
       };
         default:

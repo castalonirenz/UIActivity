@@ -83,10 +83,12 @@ export const getPlaces = () => {
     };
 };
 
-export const deletePlace = (key) => {
+export const deletePlace = itemKey => {
     return dispatch => {
-        dispatch(removePlace(key));
-        fetch("https://ordinal-tractor-221702.firebaseio.com/place" + key + ".json", {
+        dispatch(uiStartLoading());
+        dispatch(removePlace(itemKey));
+       
+        fetch("https://ordinal-tractor-221702.firebaseio.com/place/" + itemKey + ".json", {
             method: "DELETE"
         })
         .catch(err => {
@@ -96,14 +98,16 @@ export const deletePlace = (key) => {
         .then(res => res.json())
         .then(parsedRes => {
             console.log("Done!");
+            dispatch(uiStopLoading);
         });
     };
 };
 
-export const removePlace = key => {
+export const removePlace = (itemKey) => {
     return {
         type: REMOVE_PLACE,
-        key: key
+        key: itemKey
+        
     };
 };
 

@@ -33,6 +33,7 @@ exports.storeImage = functions.https.onRequest((request, response) => {
     const bucket = gcconfig.bucket("ordinal-tractor-221702.appspot.com");
     const uuid = UUID();
 
+    
     bucket.upload(
       "/tmp/uploaded-image.jpg",
       {

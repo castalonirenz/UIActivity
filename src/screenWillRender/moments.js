@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import {getPlaces,deletePlace} from '../actions/addPlace'
 import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -10,16 +10,19 @@ class Saved extends Component {
     myArray : []
   }
   alertItemName = item => {
-    alert(item.message + ": " + "\n" + item.lattitude);
+    alert(item.message + ": " + "\n" + item.lattitude+ " " + item.key);
   };
 
-  placeDeletedHandler = () => {
-    this.props.onDeletePlace(this.props.PlacesFromFireBase.key);
-    
+  placeDeletedHandler = item => {
+    this.props.onDeletePlace(item.key);
+    //alert(item.key)
   };
  
 
   render(){
+  
+
+  
 
     return (
       
@@ -49,9 +52,12 @@ class Saved extends Component {
               </Text>
 
               <View style={{width:20}}>
-              <TouchableOpacity onPress={this.placeDeletedHandler}>
+              
+             
+              <TouchableOpacity key={index} onPress={() => this.placeDeletedHandler(item)}>
              <Icon name="md-trash" color="red" size={30}/>
               </TouchableOpacity>
+              
               </View>
               
             </View>
@@ -68,28 +74,30 @@ class Saved extends Component {
   }
   componentDidUpdate(){
     this.props.onLoadPlaces();
+   // this.props.onDeletePlace();
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     onLoadPlaces: () => dispatch(getPlaces()),
-    onDeletePlace: key => dispatch(deletePlace(key))
+    onDeletePlace: (key) => dispatch(deletePlace(key))
   };
 };
 
 const mapStateToProps = state => {
   return {
-    PlacesFromFireBase: state.selectPlace.places
+    PlacesFromFireBase: state.selectPlace.places,
+    isLoading: state.ui.isLoading
   }
 }
-
+export default connect(mapStateToProps,mapDispatchToProps)(Saved)
 // const mapDispatchToProps = dispatch => {
 //   return {
 //     addAll: (latLocation,longLocation,image,message) => 
 //     dispatch(addPlace(latLocation,longLocation, image,  message))
 //   }
 // }
-export default connect(mapStateToProps,mapDispatchToProps)(Saved)
+
 
 const styles = StyleSheet.create({
   container: {
