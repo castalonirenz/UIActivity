@@ -36,7 +36,7 @@ export const signUpTwoAction = (emailText,passText) =>{
 export const signUpLastAction = (Firstname,Lastname,Email,Pass,Birthday) =>{
     return dispatch => {
         dispatch(uiStartLoading());
-        dispatch(signUpSuccess())
+        
         console.log("starting to save")
         fetch("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDjP2zU0rSdvb921RnOIjiXMf9TZW0EByE", {
             method: "POST",
@@ -67,7 +67,7 @@ export const signUpLastAction = (Firstname,Lastname,Email,Pass,Birthday) =>{
             }
             else{
 
-               
+                dispatch(signUpSuccess())
                 
                 const SaveToFireBase = {
                     type: SIGN_UP_LAST,

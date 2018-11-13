@@ -38,35 +38,28 @@ class signUpLast extends Component {
   setDate(newDate) {
     this.setState({ chosenDate: newDate });
   }
+  componentDidUpdate(){
+    if(this.props.isSuccess===true){
+      Alert.alert(
+        'Hi',
+        'Sign up successful, proceeding to log in', 
+        [
+          {text: 'OK', onPress: () => 
+          this.props.navigation.navigate("Login"),
+      
+          },
+        ],
+        { cancelable: false }
+      )
+      
+    }
+  }
 
  goToLogin = () => {
-   
- // tstInput = this.props.isSuccess
-  //const ayawmabasa = this.props.isSuccess
-    if(this.props.isSuccess === true){
-    const addAll = this.props.addAll(this.props.firstname,this.props.lastname,
+   console.log(this.props.isSuccess)
+    this.props.addAll(this.props.firstname,this.props.lastname,
       this.props.email,this.props.pass,this.state.chosenDate.toString().substr(4, 12));
 
- 
-    Alert.alert(
-      'Hi',
-      'Sign up successful, proceeding to log in', 
-      [
-        {text: 'OK', onPress: () => 
-        this.props.navigation.navigate("Login"),
-        addAll
-        },
-      ],
-      { cancelable: false }
-    )
-     alert("Registration Complete, Proceeding to Login");
-     this.props.navigation.navigate("Login");
-
-    
-  }
-  else{
-    alert('Error')
-  }
 
 }
 
