@@ -4,11 +4,13 @@ import signUpReducer from './reducer/signUpReducer'
 import thunk from 'redux-thunk';
 import uiReducer from './reducer/activityIndicator'
 import placesReduer from './reducer/addPlace'
+import Auth from './reducer/Auth'
 
 const rootReducer = combineReducers({
     signup: signUpReducer,
     ui: uiReducer,
-    selectPlace: placesReduer
+    selectPlace: placesReduer,
+    auth: Auth
 
 });
 let composeEnhancers = compose;

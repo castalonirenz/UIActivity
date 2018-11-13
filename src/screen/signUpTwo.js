@@ -11,7 +11,7 @@ import { Header, Left, Right, Icon } from "native-base";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { signUpTwoAction } from "../actions/signUp";
+import { signUpTwoAction, tryAuth } from "../actions/signUp";
 import { connect } from "react-redux";
 
 // const { navigation } = this.props;
@@ -25,13 +25,20 @@ class signUpTwo extends Component {
 
   state = {
     emailText: "",
+    passText:"",
 
     isSwitchOn: false
   };
 
   emailInput = value => {
+    
     this.setState({
       emailText: value
+    });
+  };
+  passInput = value => {
+    this.setState({
+      passText: value
     });
   };
 
@@ -40,19 +47,37 @@ class signUpTwo extends Component {
   };
 
   goToSignUpThree = () => {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
     if (this.state.emailText === "") {
       alert("Please Enter your email");
-    } else {
+    } 
+    if (reg.test(this.state.emailText)=== false) {
+      alert("Invalid Email");
+    }else {
       this.setState({
-        emailText: ""
+        emailText: "",
+        passText: ""
       });
       this.props.navigation.navigate("SignUpLast");
+      
+      // const signUpData ={
+      //   email: this.state.emailText,
+      //   password: this.state.passText
+      
+      // }
 
-      this.props.addEmail(this.state.emailText);
+      // this.props.onSignUp(signUpData);
+     this.props.addEmail(this.state.emailText, this.state.passText);
     }
   };
 
+  
+
   render() {
+
+
+
+
     return (
       <View style={styles.container}>
         <Header style={{ backgroundColor: "#00A795" }}>
@@ -76,8 +101,20 @@ class signUpTwo extends Component {
             onChangeText={text => this.emailInput(text)}
             value={this.state.emailText}
             placeholder="Enter email address"
+            keyboardType="email-address"
             underlineColorAndroid="white"
           />
+
+          <TextInput
+            style={styles.textInputDesign}
+            onChangeText={text => this.passInput(text)}
+            value={this.state.passText}
+            placeholder="Enter password"
+            underlineColorAndroid="white"
+            secureTextEntry={true}
+          />
+
+  
 
           <View style={{ flexDirection: "row" }}>
             <Text style={{ color: "white" }}>
@@ -112,7 +149,8 @@ class signUpTwo extends Component {
 
 const mapToDispatchToProps = dispatch => {
   return {
-    addEmail: email => dispatch(signUpTwoAction(email))
+    addEmail: (email,pass) => dispatch(signUpTwoAction(email,pass)),
+   // onSignUp: signUpData => dispatch(tryAuth(signUpData))
   };
 };
 export default connect(

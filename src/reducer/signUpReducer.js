@@ -4,7 +4,8 @@ const initialState = {
     firstNameText : null,
     lastNameText : null,
     emailText: null,
-    birthText: null
+    birthText: null,
+    passText: null,
 };
 
 const signUpReducer = (state = initialState, action) =>{
@@ -20,13 +21,15 @@ const signUpReducer = (state = initialState, action) =>{
             return{
                 ...state,
                 
-                emailText: action.emailText
+                emailText: action.emailText,
+                passText: action.passText
             }
 
             case SIGN_UP_LAST:
             return{
                 ...state,
-                birthText: action.birthText
+                birthText: action.birthText,
+        
             }
             default:
             return state;

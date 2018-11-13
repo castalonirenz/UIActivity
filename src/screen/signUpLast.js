@@ -12,7 +12,10 @@ import { Header, Left, Right, Icon, DatePicker } from "native-base";
 import {connect} from 'react-redux'
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { signUpLastAction } from "../actions/signUp";
+
+
 class signUpLast extends Component {
+  
   static navigationOptions = {
     header: null
   };
@@ -20,7 +23,8 @@ class signUpLast extends Component {
   state = {
     firstNameText: "",
     lastNameText: "",
-    emailText: ""
+    emailText: "",
+   
   };
   Back = () => {
     this.props.navigation.goBack();
@@ -35,9 +39,15 @@ class signUpLast extends Component {
     this.setState({ chosenDate: newDate });
   }
 
-  goToLogin = () => {
+ goToLogin = () => {
+   
+ // tstInput = this.props.isSuccess
+  //const ayawmabasa = this.props.isSuccess
+    if(this.props.isSuccess === true){
     const addAll = this.props.addAll(this.props.firstname,this.props.lastname,
-      this.props.email,this.state.chosenDate.toString().substr(4, 12));
+      this.props.email,this.props.pass,this.state.chosenDate.toString().substr(4, 12));
+
+ 
     Alert.alert(
       'Hi',
       'Sign up successful, proceeding to log in', 
@@ -49,11 +59,16 @@ class signUpLast extends Component {
       ],
       { cancelable: false }
     )
-    //  alert("Registration Complete, Proceeding to Login");
-    //  this.props.navigation.navigate("Login");
+     alert("Registration Complete, Proceeding to Login");
+     this.props.navigation.navigate("Login");
 
     
-  };
+  }
+  else{
+    alert('Error')
+  }
+
+}
 
   
   render() {
@@ -132,7 +147,10 @@ const mapStateToProps = state =>{
     firstname: state.signup.firstNameText,
     lastname: state.signup.lastNameText,
     email: state.signup.emailText,
-    isLoading: state.ui.isLoading
+    pass: state.signup.passText,
+    isLoading: state.ui.isLoading,
+    isSuccess: state.auth.isSuccess
+
     
   }
 
@@ -140,7 +158,7 @@ const mapStateToProps = state =>{
 
 const mapDispatchToProps = dispatch=>{
   return{
-    addAll: (fname,lname,email,birthday) => dispatch(signUpLastAction(fname,lname,email,birthday))
+    addAll: (fname,lname,email,pass,birthday) => dispatch(signUpLastAction(fname,lname,email,pass,birthday))
   }
 }
 
