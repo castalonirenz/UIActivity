@@ -85,7 +85,7 @@ export const getPlaces = () => {
 
 export const deletePlace = itemKey => {
     return dispatch => {
-        dispatch(uiStartLoading());
+        
         dispatch(removePlace(itemKey));
        
         fetch("https://ordinal-tractor-221702.firebaseio.com/place/" + itemKey + ".json", {
@@ -98,8 +98,9 @@ export const deletePlace = itemKey => {
         .then(res => res.json())
         .then(parsedRes => {
             console.log("Done!");
-            dispatch(uiStopLoading);
+            
         });
+        
     };
 };
 

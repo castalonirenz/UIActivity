@@ -65,3 +65,13 @@ exports.storeImage = functions.https.onRequest((request, response) => {
     );
   });
 });
+
+exports.deleteImage = functions.database
+  .ref("/happyPlaces/")
+  .onDelete(event => {
+    const placeData = event.data.previous.val();
+    const imagePath = placeData.imagePath;
+
+    const bucket = gcs.bucket("ordinal-tractor-221702.appspot.com");
+    return bucket.file(imagePath).delete();
+  });

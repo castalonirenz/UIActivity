@@ -155,6 +155,7 @@ class PickLocation extends Component {
         <MapView
           showsTraffic={true}
           showsBuildings={true}
+         
           initialRegion={this.state.focusedLocation}
           style={styles.map}
           onPress={this.pickLocationHandler}
@@ -164,7 +165,11 @@ class PickLocation extends Component {
           {marker}
         </MapView>
         <View style={styles.button}>
-          <Button title="Locate Me" onPress={this.getLocationHandler} />
+        <TouchableOpacity onPress={this.getLocationHandler}>
+          <Icon name="md-locate" size={30} color="blue"/>
+          
+          </TouchableOpacity>
+          <Text style={{color:"black"}}>Locate Me</Text>
         </View>
 
         {/* <PickImage/> */}
@@ -239,6 +244,7 @@ const styles = StyleSheet.create({
     height: 250
   },
   button: {
+    alignItems:"center",
     margin: 8
   },
   textDesign: {
