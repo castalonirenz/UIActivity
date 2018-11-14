@@ -1,6 +1,6 @@
-import {SIGN_UP_ONE,SIGN_UP_TWO,SIGN_UP_LAST} from './actionTypes'
+import {SIGN_UP_ONE,SIGN_UP_TWO,SIGN_UP_LAST, AUTH_SET_TOKEN} from './actionTypes'
 import {uiStartLoading,uiStopLoading,signUpSuccess,signUpFailed} from './index'
-
+import {authSetToken} from './index'
 import signUpLast from '../screen/signUpLast';
 
 
@@ -63,15 +63,15 @@ export const signUpLastAction = (Firstname,Lastname,Email,Pass,Birthday) =>{
                 dispatch(uiStopLoading());
                 alert("Please use other email")
                
-                
-             
-              
-               
+            }
+            else if(!parsedRes.idToken){
+                console(parsedRes.idToken)
+                alert("Token error")
             }
             else{
 
                 dispatch(signUpSuccess())
-                
+                dispatch(authSetToken(parsedRes.idToken));
                 const SaveToFireBase = {
                     type: SIGN_UP_LAST,
                     Firstname: Firstname,
@@ -88,10 +88,14 @@ export const signUpLastAction = (Firstname,Lastname,Email,Pass,Birthday) =>{
                 .catch(err => console.log(err))
                 .then(res => res.json())
                 .then(parsedRes => {
+
+                    
+              
                     dispatch(uiStopLoading());
-                   
+                    
                     console.log(parsedRes)
                     console.log("success")
+                    
                     
                 })
             }
