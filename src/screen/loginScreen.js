@@ -11,6 +11,7 @@ import { Header, Left, Right, Icon } from "native-base";
 import {loginAction} from '../actions/login'
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {connect} from 'react-redux'
+  
 class loginScreen extends Component {
   static navigationOptions = {
     header: null

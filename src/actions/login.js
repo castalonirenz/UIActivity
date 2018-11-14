@@ -1,4 +1,4 @@
-import {SIGN_IN} from './actionTypes'
+import {SIGN_IN, AUTH_SET_TOKEN} from './actionTypes'
 import {uiStartLoading,uiStopLoading,signInFailed,signInSuccess} from './index'
 
 
@@ -35,10 +35,36 @@ export const loginAction = (email,password) =>{
             alert("Please check your email and password");
 
             }
+            if(!parsedRes.idToken){
+                alert("Token Error!");
+            }
             else{
                 dispatch(signInSuccess())
+                dispatch(authSetToken(parsedRes.idToken))
+                
             }
          })
          
     }
 }
+
+export const authSetToken = token =>{
+    return{
+        type: AUTH_SET_TOKEN,
+        token: token
+    }
+}
+
+export const authGetToken = () => {
+    return (dispatch, getState) => {
+        const promise = new Promise((resolve, reject) => {
+            const token = getState().auth.token;
+            if (!token) {
+                reject();
+            } else {
+                resolve(token);
+            }
+        });  
+        return promise;
+    };
+};

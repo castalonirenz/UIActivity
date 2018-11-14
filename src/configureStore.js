@@ -10,7 +10,8 @@ const rootReducer = combineReducers({
     signup: signUpReducer,
     ui: uiReducer,
     selectPlace: placesReduer,
-    auth: Auth
+    auth: Auth,
+    
 
 });
 let composeEnhancers = compose;
