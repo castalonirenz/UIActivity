@@ -104,10 +104,7 @@ class Saved extends Component {
   componentDidMount() {
     this.props.onLoadPlaces();
   }
-  componentDidUpdate() {
-    this.props.onLoadPlaces();
-    // this.props.onDeletePlace();
-  }
+
 }
 const mapDispatchToProps = dispatch => {
   return {

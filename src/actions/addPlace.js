@@ -49,6 +49,7 @@ export const addPlace = (latLocation, longLocation, image, message) => {
         console.log(parsedRes);
         dispatch(uiStopLoading());
         alert("Place added!");
+        dispatch(getPlaces())
       });
   };
 };
