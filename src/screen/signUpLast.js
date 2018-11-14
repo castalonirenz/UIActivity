@@ -38,29 +38,34 @@ class signUpLast extends Component {
   setDate(newDate) {
     this.setState({ chosenDate: newDate });
   }
+
+
   componentDidUpdate(){
     if(this.props.isSuccess===true){
-      Alert.alert(
-        'Hi',
-        'Sign up successful, proceeding to log in', 
-        [
-          {text: 'OK', onPress: () => 
-          this.props.navigation.navigate("Login"),
-      
-          },
-        ],
-        { cancelable: false }
-      )
-      
+     
+          this.props.navigation.navigate("Login")
+    
     }
+  
+    else{
+      if(this.props.isLoading === false){
+      this.props.navigation.goBack();
+      }
+    }
+
+   
+  
+    
   }
 
  goToLogin = () => {
+ 
+ 
    console.log(this.props.isSuccess)
     this.props.addAll(this.props.firstname,this.props.lastname,
       this.props.email,this.props.pass,this.state.chosenDate.toString().substr(4, 12));
 
-
+    
 }
 
   
@@ -79,7 +84,7 @@ class signUpLast extends Component {
     );
 
     if (this.props.isLoading) {
-      signUpSubmit = <ActivityIndicator />;
+      signUpSubmit = <ActivityIndicator size={30} color="red"/>;
     }
 
     return (

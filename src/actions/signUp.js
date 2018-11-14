@@ -38,7 +38,8 @@ export const signUpLastAction = (Firstname,Lastname,Email,Pass,Birthday) =>{
         dispatch(uiStartLoading());
         
         console.log("starting to save")
-        fetch("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDjP2zU0rSdvb921RnOIjiXMf9TZW0EByE", {
+        let apiKey ="AIzaSyDjP2zU0rSdvb921RnOIjiXMf9TZW0EByE"
+        fetch("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key="+apiKey, {
             method: "POST",
             body: JSON.stringify({
                 email: Email,
@@ -58,10 +59,12 @@ export const signUpLastAction = (Firstname,Lastname,Email,Pass,Birthday) =>{
         .then(parsedRes => {
             console.log(parsedRes.error)
             if(parsedRes.error){
-                
-                dispatch(uiStopLoading());
                 dispatch(signUpFailed())
-                alert("Dpat wala na!")
+                dispatch(uiStopLoading());
+                alert("Please use other email")
+               
+                
+             
               
                
             }

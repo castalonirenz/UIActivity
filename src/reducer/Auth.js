@@ -1,7 +1,8 @@
-import { SIGN_UP_SUCCESS, SIGN_UP_FAILED } from "../actions/actionTypes";
+import { SIGN_UP_SUCCESS, SIGN_UP_FAILED, SIGN_IN_SUCCESS, SIGN_IN_FAILED } from "../actions/actionTypes";
 
 const initialState = {
-  isSuccess: false
+  isSuccess: false,
+  isSuccessSign: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +17,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         isSuccess: false
       };
+      case SIGN_IN_SUCCESS:
+      return{
+        ...state,
+        isSuccessSign: true
+      }
+      case SIGN_UP_FAILED:
+      return{
+        ...state,
+        isSuccessSign: false
+      }
     default:
       return state;
   }

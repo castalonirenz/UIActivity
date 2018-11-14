@@ -142,7 +142,7 @@ class PickLocation extends Component {
     )
 
     if (this.props.isLoading) {
-      addPlaceDetails = <ActivityIndicator />;
+      addPlaceDetails = <ActivityIndicator size={30} color="red" />;
     }
 
     if (this.state.locationChosen) {

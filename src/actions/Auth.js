@@ -1,4 +1,4 @@
-import { SIGN_UP_SUCCESS, SIGN_UP_FAILED } from './actionTypes';
+import { SIGN_UP_SUCCESS, SIGN_UP_FAILED, SIGN_IN_FAILED, SIGN_IN_SUCCESS } from './actionTypes';
 
 export const signUpSuccess = () => {
     return {
@@ -11,3 +11,15 @@ export const signUpFailed = () => {
         type: SIGN_UP_FAILED
     };
 };
+
+export const signInSuccess = () =>{
+    return{
+        type: SIGN_IN_SUCCESS
+    }
+}
+
+export const signInFailed = () =>{
+    return{
+        type: SIGN_IN_FAILED
+    }
+}

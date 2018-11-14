@@ -5,11 +5,12 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ScrollView
+  ActivityIndicator
 } from "react-native";
 import { Header, Left, Right, Icon } from "native-base";
-
+import {loginAction} from '../actions/login'
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {connect} from 'react-redux'
 class loginScreen extends Component {
   static navigationOptions = {
     header: null
@@ -43,6 +44,14 @@ class loginScreen extends Component {
   Back = () => {
     this.props.navigation.goBack();
   };
+
+  componentDidUpdate(){
+    if(this.props.isSuccessSign === true){
+      this.props.navigation.navigate("Tab");
+      
+    }
+    
+  }
   loggedOn = () => {
     if (this.state.emailtext === "") {
       alert("Please fill out email");
@@ -53,12 +62,32 @@ class loginScreen extends Component {
         emailtext: "",
         passwordText: ""
       });
-      this.props.navigation.navigate("Tab");
+    this.props.loginScreen(this.state.emailtext,this.state.passwordText)
+   
     }
-  };
 
+  
+  };
+  
   render() {
-    console.log("the app started")
+    console.log("log screen in starter")
+    let signInSubmit = (
+      <TouchableOpacity
+      style={{ marginLeft: "75%" }}
+      onPress={this.loggedOn}
+    >
+      <Ionicons
+        name="ios-arrow-dropright-circle"
+        color="white"
+        size={50}
+      />
+    </TouchableOpacity>
+    )
+
+    if (this.props.isLoading) {
+      signInSubmit = <ActivityIndicator size={30} color="red"/>;
+    }
+
     return (
       
       <View style={styles.container}>
@@ -100,26 +129,30 @@ class loginScreen extends Component {
             secureTextEntry={this.state.showPass}
           />
 
-          <TouchableOpacity
-            style={{ marginLeft: "75%" }}
-            onPress={this.loggedOn}
-          >
-            <Ionicons
-              name="ios-arrow-dropright-circle"
-              color="white"
-              size={50}
-            />
-          </TouchableOpacity>
+          {signInSubmit}
+          
         </View>
         
       </View>
       
     );
   }
-  componentDidMount(){
-    
+
+}
+const mapStateToProps = state =>{
+  return{
+    isSuccessSign: state.auth.isSuccessSign,
+    isLoading: state.ui.isLoading,
+  }
+  
+}
+const mapDispatchToProps = dispatch=>{
+  return{
+    loginScreen: (email,pass) => dispatch(loginAction(email,pass))
   }
 }
+
+export default connect(mapStateToProps,mapDispatchToProps) (loginScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -156,4 +189,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default loginScreen;
+
