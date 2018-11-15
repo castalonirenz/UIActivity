@@ -35,6 +35,7 @@ const addPlaceReducer = (state = initialState, action) =>{
           return place.key !== action.key;
         })
       };
+      
         default:
         return state;
     }

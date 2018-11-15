@@ -3,7 +3,7 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
 import signUpReducer from './reducer/signUpReducer'
 import thunk from 'redux-thunk';
 import uiReducer from './reducer/activityIndicator'
-import placesReduer from './reducer/addPlace'
+import placesReduer from './reducer/Places'
 import Auth from './reducer/Auth'
 
 const rootReducer = combineReducers({

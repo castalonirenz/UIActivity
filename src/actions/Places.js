@@ -92,6 +92,40 @@ export const getPlaces = () => {
 };
 }
 
+export const updatePlace = (itemKey,message) =>{
+  return dispatch => {
+    console.log("update okay dito")
+    dispatch(authGetToken())
+    .catch(()=>{
+      alert("No valid token found")
+    }) 
+    
+    .then(token =>{
+      return fetch("https://ordinal-tractor-221702.firebaseio.com/place/" + itemKey + ".json?auth=" +token,{
+        method: "PUT",
+        body: JSON.stringify({
+          message: message
+        })
+
+         
+       
+      })
+      .then(res => res.json())
+      .then(parsedRes => {
+        console.log(parsedRes)
+        console.log("Done!");
+        // dispatch(getPlaces())
+        // dispatch(setPlaces())
+      })
+      .catch(err => {
+        alert("Something went wrong, sorry :/");
+        console.log("error dito sa catch");
+      })
+    })
+
+  }
+}
+
 export const deletePlace = itemKey => {
   return dispatch => {
       dispatch(authGetToken())

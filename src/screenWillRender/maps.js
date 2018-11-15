@@ -14,7 +14,7 @@ import {
 
 import ImagePicker from "react-native-image-picker";
 import { connect } from 'react-redux'
-import { addPlace } from '../actions/addPlace'
+import { addPlace } from '../actions/Places'
 import Icon from 'react-native-vector-icons/Ionicons'
 import MapView from "react-native-maps";
 

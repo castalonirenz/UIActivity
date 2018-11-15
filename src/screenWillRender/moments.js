@@ -6,41 +6,144 @@ import {
   StyleSheet,
   Image,
   ActivityIndicator,
-  Dimensions
+  Alert,
+  Modal,
+  TextInput,
+  ScrollView
 } from "react-native";
-import { getPlaces, deletePlace } from "../actions/addPlace";
+import { getPlaces, deletePlace,updatePlace } from "../actions/Places";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
 import MapView from "react-native-maps";
 
-
 class Saved extends Component {
   state = {
-    myArray: []
+    myArray: [],
+    itemLat: 14.520445,
+    itemLong: 121.053886,
+    modalVisible: false,
+
+    itemDetails:{
+    itemData: null,
+    itemImg: null,
+    itemText: null,
+   
+    textEdit: null,
+    itemKey: null
+    }
   };
+
+  letsSee(visible, item) {
+    this.setModalVisible(visible);
+    this.PassParams(item);
+  }
+
+  setModalVisible(visible) {
+    this.setState({
+      modalVisible: visible
+    });
+  }
+
+  PassParams(item) {
+    this.setState({
+      itemKey: item.key,
+      itemText: item.message,
+      itemImg: item.image,
+      itemLat: item.lattitude,
+      itemLong: item.longtitude
+    });
+  }
   alertItemName = item => {
     alert(item.message + ": " + "\n" + item.lattitude + " " + item.key);
   };
 
   placeDeletedHandler = item => {
     this.props.onDeletePlace(item.key);
-    //alert(item.key)
   };
 
+  placeEditHandler = () => {
+    this.props.onEditPlace(this.state.itemKey, this.state.itemDetails);
+  // alert(this.state.itemKey)
+    this.state.modalVisible =false
+  console.log(this.state.itemKey, this.state.textEdit)
+  };
+
+  editText = (val) =>{
+   this.setState({
+     textEdit: val
+   })
+  }
+
   render() {
-    let marker = null;
-    // const focusedLocation = {
-    //   latitude: 14.5548,
-    //   longitude: 121.0476,
-    //   latitudeDelta: 0.00122,
-    //   longitudeDelta: 0.0122
-     
-    // }
-   // marker = <MapView.Marker coordinate={focusedLocation}  />;
     return (
       <View style={styles.viewContainer}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {}}
+        >
+        <ScrollView style={{backgroundColor:"#FFE4E1"}}>
+          <View style={styles.modalContainer}>
+            <Text style={{ fontSize: 23, fontWeight: "bold", color: "black" }}>
+              EDIT THIS ITEM
+            </Text>
+
+            <Image
+              source={{
+                uri: this.state.itemImg
+              }}
+              style={{ width: 150, height: 150 }}
+            />
+
+            <MapView
+              showsTraffic={true}
+              showsBuildings={true}
+              scrollEnabled={false}
+              initialRegion={{
+                latitude: this.state.itemLat,
+                longitude: this.state.itemLong,
+                latitudeDelta: 0.00122,
+                longitudeDelta: 0.0122
+              }}
+              style={{ width: "80%", height: 250, marginTop: 20 }}
+              onPress={this.pickLocationHandler}
+              ref={ref => (this.map = ref)}
+            >
+              <MapView.Marker
+                coordinate={{
+                  latitude: this.state.itemLat,
+                  longitude: this.state.itemLong,
+                  latitudeDelta: 0.00122,
+                  longitudeDelta: 0.0122
+                }}
+              />
+            </MapView>
+
+            <Text style={styles.textMsg}>
+              Your Caption: {this.state.itemText}
+            </Text>
+            <TextInput
+              style={styles.txtInput}
+              onChangeText={val => this.editText(val)}
+              value={this.state.textEdit}
+              placeholder="Enter something to edit your caption"
+              underlineColorAndroid="white"
+            />
+
+            <TouchableOpacity onPress={this.placeEditHandler}>
+                <Text>Update this</Text>
+              </TouchableOpacity>
+           
+              <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+                <Text>Close this modal</Text>
+              </TouchableOpacity>
+            
+          </View>
+          </ScrollView>
+        </Modal>
+
         {this.props.PlacesFromFireBase.map((item, index) => (
-         
           <TouchableOpacity
             key={index}
             style={styles.container}
@@ -59,43 +162,57 @@ class Saved extends Component {
                 showsBuildings={true}
                 scrollEnabled={false}
                 initialRegion={{
-                  latitude : item.lattitude,
-                  longitude :item.longtitude,
+                  latitude: item.lattitude,
+                  longitude: item.longtitude,
                   latitudeDelta: 0.00122,
-                 longitudeDelta: 0.0122
-                  
+                  longitudeDelta: 0.0122
                 }}
                 style={styles.map}
                 onPress={this.pickLocationHandler}
                 ref={ref => (this.map = ref)}
-                >
-               <MapView.Marker coordinate={{
-                 latitude:item.lattitude,
-                 longitude: item.longtitude,
-                 latitudeDelta: 0.00122,
-                 longitudeDelta: 0.0122
-                  }}/>
-                </MapView> 
-              </View>
-              <View style={{ flex: 1, flexDirection: "column" }}>
-                <Text>Location Details:</Text>
-                <Text>Lattitude: {" " + item.lattitude}</Text>
-                <Text>Longtitude: {" " + item.longtitude}</Text>
-                <Text style={styles.textMsg} numberOfLines={1}>
+              >
+                <MapView.Marker
+                  coordinate={{
+                    latitude: item.lattitude,
+                    longitude: item.longtitude,
+                    latitudeDelta: 0.00122,
+                    longitudeDelta: 0.0122
+                  }}
+                />
+              </MapView>
+            </View>
+            <View style={{ flex: 1, flexDirection: "column" }}>
+              <Text>Location Details:</Text>
+              <Text>Lattitude: {" " + item.lattitude}</Text>
+              <Text>Longtitude: {" " + item.longtitude}</Text>
+              <Text style={styles.textMsg} numberOfLines={1}>
                 Your Experience:
-                  {" " + item.message}
-                </Text>
+                {" " + item.message}
+              </Text>
 
-                <View style={{ width: 20 }}>
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => this.placeDeletedHandler(item)}
-                  >
-                    <Icon name="md-trash" color="red" size={30} />
-                  </TouchableOpacity>
+              <View style={{ flex: 1, flexDirection: "row" }}>
+                <View>
+                  <View style={{ width: 20 }}>
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => this.placeDeletedHandler(item)}
+                    >
+                      <Icon name="md-trash" color="red" size={30} />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={{ paddingLeft: 10 }}>
+                  <View style={{ width: 23 }}>
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => this.letsSee(true, item)}
+                    >
+                      <Icon name="md-create" color="blue" size={30} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
               </View>
-           
+            </View>
           </TouchableOpacity>
         ))}
       </View>
@@ -104,12 +221,12 @@ class Saved extends Component {
   componentDidMount() {
     this.props.onLoadPlaces();
   }
-
 }
 const mapDispatchToProps = dispatch => {
   return {
     onLoadPlaces: () => dispatch(getPlaces()),
-    onDeletePlace: key => dispatch(deletePlace(key))
+    onDeletePlace: key => dispatch(deletePlace(key)),
+    onEditPlace: (itemKey,itemDetails) => dispatch(updatePlace(itemKey,itemDetails))
   };
 };
 
@@ -132,6 +249,14 @@ const styles = StyleSheet.create({
     width: "90%",
     borderBottomWidth: 1,
     borderBottomColor: "#D8D8D8"
+  },
+  txtInput:{
+    width: "80%"
+  },
+  modalContainer: {
+    flex: 1,
+    alignItems: "center",
+    backgroundColor: "#FFE4E1"
   },
   viewContainer: {
     flex: 1,
