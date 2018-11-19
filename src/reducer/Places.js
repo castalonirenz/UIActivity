@@ -8,6 +8,7 @@ const initialState = {
     text: null,
     latLocation: null,
     longLocation: null,
+    heart: null,
     places: []
 
 
@@ -18,10 +19,12 @@ const addPlaceReducer = (state = initialState, action) =>{
         case ADD_PLACE:
         return{
             ...state,
-            latLocation: latLocation,
-            longLocation: longLocation,
-            image: image,
-            text: message
+            latLocation: action.lattitude,
+            longLocation:  action.longtitude,
+            image: action.image,
+            text:  action.message,
+            heart:  action.rating
+            
         };
         case SET_PLACES:
         return{

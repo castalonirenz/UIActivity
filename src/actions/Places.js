@@ -6,9 +6,10 @@ import {
 } from "./actionTypes";
 import { uiStartLoading, uiStopLoading, authGetToken } from "./index";
 
-export const addPlace = (latLocation, longLocation, image, message) => {
+export const addPlace = (latLocation,longLocation,image,message,heartCount) => {
   return dispatch => {
     dispatch(uiStartLoading());
+    dispatch(getAddedPlaces(latLocation,longLocation,image,message,heartCount))
     fetch(
       "https://us-central1-ordinal-tractor-221702.cloudfunctions.net/storeImage",
       {
@@ -30,7 +31,8 @@ export const addPlace = (latLocation, longLocation, image, message) => {
           lattitude: latLocation,
           longtitude: longLocation,
           image: parsedRes.imageUrl,
-          message: message
+          message: message,
+          rating: heartCount
         };
         return fetch(
           "https://ordinal-tractor-221702.firebaseio.com/place.json",
@@ -49,8 +51,20 @@ export const addPlace = (latLocation, longLocation, image, message) => {
         console.log(parsedRes);
         dispatch(uiStopLoading());
         alert("Place added!");
-        dispatch(getPlaces())
+        dispatch(getPlaces());
       });
+  };
+};
+
+export const getAddedPlaces = ( latLocation,longLocation,image,message, heartCount) => {
+  return {
+    type: ADD_PLACE,
+    lattitude: latLocation,
+    longtitude: longLocation,
+    image: image,
+    message: message,
+    rating: heartCount
+
   };
 };
 export const setPlaces = places => {
@@ -62,92 +76,90 @@ export const setPlaces = places => {
 
 export const getPlaces = () => {
   console.log("pumasok sa get places");
-  return dispatch =>{
-    
-  dispatch(authGetToken())
-    .then(token => {
-      return fetch(
-        "https://ordinal-tractor-221702.firebaseio.com/place.json?auth=" + token
-      );
-    })
-    .catch(() => {
-      alert("No valid token found!");
-    })
-    .then(res => res.json())
-
-    .then(parsedRes => {
-      // console.log(parsedRes)
-      const places = [];
-      for (let key in parsedRes) {
-        places.push({
-          ...parsedRes[key],
-          key: key
-        });
-      }
-      dispatch(setPlaces(places));
-    })
-    .catch(err => {
-      alert("Something went wrong, sorry :/");
-      console.log(err);
-    });
-};
-}
-
-export const updatePlace = (itemDetails) =>{
   return dispatch => {
-    console.log("update okay dito")
-    dispatch(uiStartLoading());
     dispatch(authGetToken())
-    .catch(()=>{
-      alert("No valid token found")
-    }) 
-    
-    .then(token =>{
-      
-      return fetch("https://ordinal-tractor-221702.firebaseio.com/place/" + itemDetails.itemKey + ".json?auth=" +token,{
-        method: "PATCH",
-        body: JSON.stringify({
-          message: itemDetails.textEdit,
-         
-        })
-
-         
-       
+      .then(token => {
+        return fetch(
+          "https://ordinal-tractor-221702.firebaseio.com/place.json?auth=" +
+            token
+        );
+      })
+      .catch(() => {
+        alert("No valid token found!");
       })
       .then(res => res.json())
+
       .then(parsedRes => {
-        console.log(parsedRes)
-        console.log("Done!");
-        dispatch(getPlaces())
-        dispatch(uiStopLoading())
-        // dispatch(getPlaces())
-        // dispatch(setPlaces())
+        const places = [];
+        for (let key in parsedRes) {
+          places.push({
+            ...parsedRes[key],
+            key: key
+          });
+        }
+        dispatch(setPlaces(places));
       })
       .catch(err => {
         alert("Something went wrong, sorry :/");
-        console.log("error dito sa catch");
-      })
-    })
+        console.log(err);
+      });
+  };
+};
 
-  }
-}
+export const updatePlace = itemDetails => {
+  return dispatch => {
+    console.log("update okay dito");
+    dispatch(uiStartLoading());
+    dispatch(authGetToken())
+      .catch(() => {
+        alert("No valid token found");
+      })
+
+      .then(token => {
+        return fetch(
+          "https://ordinal-tractor-221702.firebaseio.com/place/" +
+            itemDetails.itemKey +
+            ".json?auth=" +
+            token,
+          {
+            method: "PATCH",
+            body: JSON.stringify({
+              message: itemDetails.textEdit
+            })
+          }
+        )
+          .then(res => res.json())
+          .then(parsedRes => {
+            console.log(parsedRes);
+            console.log("Done!");
+            dispatch(getPlaces());
+            dispatch(uiStopLoading());
+          })
+          .catch(err => {
+            alert("Something went wrong, sorry :/");
+            console.log("error dito sa catch");
+          });
+      });
+  };
+};
 
 export const deletePlace = itemKey => {
   return dispatch => {
-      dispatch(authGetToken())
-      .catch(()=>{
-          alert("No valid token found")
+    dispatch(authGetToken())
+      .catch(() => {
+        alert("No valid token found");
       })
-      .then(token =>{
+      .then(token => {
         dispatch(removePlace(itemKey));
         return fetch(
-            "https://ordinal-tractor-221702.firebaseio.com/place/" +
-              itemKey +
-              ".json?auth=" + token,
-            {
-              method: "DELETE"
-            }
-          );
+          "https://ordinal-tractor-221702.firebaseio.com/place/" +
+            itemKey +
+            ".json?auth=" +
+            token,
+          {
+            method: "DELETE"
+          }
+        );
       })
       .then(res => res.json())
       .then(parsedRes => {
@@ -156,8 +168,7 @@ export const deletePlace = itemKey => {
       .catch(err => {
         alert("Something went wrong, sorry :/");
         console.log(err);
-      })
-      
+      });
   };
 };
 

@@ -15,7 +15,7 @@ import {
 import { getPlaces, deletePlace, updatePlace } from "../actions/Places";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Heart from "react-native-vector-icons/Ionicons";
 import MapView from "react-native-maps";
 
 class Saved extends Component {
@@ -89,11 +89,25 @@ class Saved extends Component {
     });
   };
 
+  renderHeart = val => {
+    const hearts = [];
+    let i = 0;
+    do {
+      i < val
+        ? hearts.push(<Heart name="md-heart" size={30} color="red" key={i} style={{paddingLeft: 5}}/>)
+        : hearts.push(
+            <Heart name="md-heart-outline" size={30} color="red" key={i} style={{paddingLeft: 5}}/>
+          );
+
+      i += 1;
+    } while (i < 5);
+    return hearts;
+  };
   render() {
     let update = (
       <TouchableOpacity onPress={this.placeEditHandler}>
-      <Icon name="md-checkmark-circle-outline" size={30}/>
-      {/* //<Icon name="md-trash" color="red" size={30} /> */}
+        <Icon name="md-checkmark-circle-outline" size={30} />
+        {/* //<Icon name="md-trash" color="red" size={30} /> */}
       </TouchableOpacity>
     );
     if (this.props.isLoading) {
@@ -101,77 +115,72 @@ class Saved extends Component {
     }
 
     return (
-     
       <View style={styles.viewContainer}>
-       <SafeAreaView>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {}}
-        > 
-         
-          <ScrollView style={{ backgroundColor: "#FFE4E1" }}>
-          
-            <View style={styles.modalContainer}>
-              <Text
-                style={{ fontSize: 23, fontWeight: "bold", color: "black" }}
-              >
-                EDIT THIS ITEM
-              </Text>
+        <SafeAreaView>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {}}
+          >
+            <ScrollView style={{ backgroundColor: "#FFE4E1" }}>
+              <View style={styles.modalContainer}>
+                <Text
+                  style={{ fontSize: 23, fontWeight: "bold", color: "black" }}
+                >
+                  EDIT THIS ITEM
+                </Text>
 
-              <Image
-                source={{
-                  uri: this.state.itemDetails.itemImg
-                }}
-                style={{ width: 150, height: 150 }}
-              />
+                <Image
+                  source={{
+                    uri: this.state.itemDetails.itemImg
+                  }}
+                  style={{ width: 150, height: 150 }}
+                />
 
-              <MapView
-                showsTraffic={true}
-                showsBuildings={true}
-                scrollEnabled={false}
-                initialRegion={{
-                  latitude: this.state.itemDetails.itemLat,
-                  longitude: this.state.itemDetails.itemLong,
-                  latitudeDelta: 0.00122,
-                  longitudeDelta: 0.0122
-                }}
-                style={{ width: "80%", height: 250, marginTop: 20 }}
-                onPress={this.pickLocationHandler}
-                ref={ref => (this.map = ref)}
-              >
-                <MapView.Marker
-                  coordinate={{
+                <MapView
+                  showsTraffic={true}
+                  showsBuildings={true}
+                  scrollEnabled={false}
+                  initialRegion={{
                     latitude: this.state.itemDetails.itemLat,
                     longitude: this.state.itemDetails.itemLong,
                     latitudeDelta: 0.00122,
                     longitudeDelta: 0.0122
                   }}
+                  style={{ width: "80%", height: 250, marginTop: 20 }}
+                  onPress={this.pickLocationHandler}
+                  ref={ref => (this.map = ref)}
+                >
+                  <MapView.Marker
+                    coordinate={{
+                      latitude: this.state.itemDetails.itemLat,
+                      longitude: this.state.itemDetails.itemLong,
+                      latitudeDelta: 0.00122,
+                      longitudeDelta: 0.0122
+                    }}
+                  />
+                </MapView>
+
+                <Text style={styles.textMsg}>
+                  Your Caption: {this.state.itemDetails.itemText}
+                </Text>
+                <TextInput
+                  style={styles.txtInput}
+                  onChangeText={val => this.editText(val)}
+                  value={this.state.itemDetails.textEdit}
+                  placeholder="Enter something to edit your caption"
+                  underlineColorAndroid="white"
                 />
-              </MapView>
 
-              <Text style={styles.textMsg}>
-                Your Caption: {this.state.itemDetails.itemText}
-              </Text>
-              <TextInput
-                style={styles.txtInput}
-                onChangeText={val => this.editText(val)}
-                value={this.state.itemDetails.textEdit}
-                placeholder="Enter something to edit your caption"
-                underlineColorAndroid="white"
-              />
+                {update}
 
-              {update}
-
-              <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                <Text>Close this modal</Text>
-              </TouchableOpacity>
-            </View>
-           
-          </ScrollView>
-         
-        </Modal>
+                <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+                  <Text>Close this modal</Text>
+                </TouchableOpacity>
+              </View>
+            </ScrollView>
+          </Modal>
         </SafeAreaView>
         {this.props.PlacesFromFireBase.map((item, index) => (
           <TouchableOpacity
@@ -212,6 +221,10 @@ class Saved extends Component {
               </MapView>
             </View>
             <View style={{ flex: 1, flexDirection: "column" }}>
+
+             <View style={{flexDirection:"row"}}>
+              {this.renderHeart(item.rating)}
+              </View>
               <Text>Location Details:</Text>
               <Text>Lattitude: {" " + item.lattitude}</Text>
               <Text>Longtitude: {" " + item.longtitude}</Text>
