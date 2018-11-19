@@ -48,9 +48,10 @@ class PickLocation extends Component {
   };
 
   sharePlace = () => {
-    //  alert(this.state.placeText+"\n"+this.state.focusedLocation.latitude + "\n "+
-    //  this.state.focusedLocation.longitude + "\n"+ this.state.controls.image.value)
-    // alert(this.state.focusedLocation.latitude + this.state.)
+    if(!this.state.controls.image.valid){
+      alert("Please Select/Capture an image")
+    }
+    else{
     this.props.addAll(
       this.state.focusedLocation.latitude,
       this.state.focusedLocation.longitude,
@@ -58,6 +59,7 @@ class PickLocation extends Component {
       this.state.placeText,
       this.state.heartCount
     );
+    }
   };
 
   placeInput = value => {

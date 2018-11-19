@@ -21,8 +21,7 @@ import MapView from "react-native-maps";
 class Saved extends Component {
   state = {
     myArray: [],
-    // itemLat: 14.520445,
-    // itemLong: 121.053886,
+   
     modalVisible: false,
 
     itemDetails: {
@@ -141,7 +140,7 @@ class Saved extends Component {
                 <MapView
                   showsTraffic={true}
                   showsBuildings={true}
-                  scrollEnabled={false}
+                
                   initialRegion={{
                     latitude: this.state.itemDetails.itemLat,
                     longitude: this.state.itemDetails.itemLong,
