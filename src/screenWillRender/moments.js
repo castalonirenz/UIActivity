@@ -9,27 +9,30 @@ import {
   Alert,
   Modal,
   TextInput,
-  ScrollView
+  ScrollView,
+  SafeAreaView
 } from "react-native";
-import { getPlaces, deletePlace,updatePlace } from "../actions/Places";
+import { getPlaces, deletePlace, updatePlace } from "../actions/Places";
 import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/Ionicons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MapView from "react-native-maps";
 
 class Saved extends Component {
   state = {
     myArray: [],
-    itemLat: 14.520445,
-    itemLong: 121.053886,
+    // itemLat: 14.520445,
+    // itemLong: 121.053886,
     modalVisible: false,
 
-    itemDetails:{
-    itemData: null,
-    itemImg: null,
-    itemText: null,
-   
-    textEdit: null,
-    itemKey: null
+    itemDetails: {
+      itemData: null,
+      itemImg: null,
+      itemText: null,
+      itemLat: 14.520445,
+      itemLong: 121.053886,
+      textEdit: null,
+      itemKey: null
     }
   };
 
@@ -45,12 +48,18 @@ class Saved extends Component {
   }
 
   PassParams(item) {
-    this.setState({
-      itemKey: item.key,
-      itemText: item.message,
-      itemImg: item.image,
-      itemLat: item.lattitude,
-      itemLong: item.longtitude
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        itemDetails: {
+          ...prevState.itemDetails,
+          itemKey: item.key,
+          itemText: item.message,
+          itemImg: item.image,
+          itemLat: item.lattitude,
+          itemLong: item.longtitude
+        }
+      };
     });
   }
   alertItemName = item => {
@@ -62,87 +71,108 @@ class Saved extends Component {
   };
 
   placeEditHandler = () => {
-    this.props.onEditPlace(this.state.itemKey, this.state.itemDetails);
-  // alert(this.state.itemKey)
-    this.state.modalVisible =false
-  console.log(this.state.itemKey, this.state.textEdit)
+    this.props.onEditPlace(this.state.itemDetails);
+    // alert(this.state.itemKey)
+    this.setModalVisible(false);
+    console.log(this.state.itemKey, this.state.textEdit);
   };
 
-  editText = (val) =>{
-   this.setState({
-     textEdit: val
-   })
-  }
+  editText = val => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        itemDetails: {
+          ...prevState.itemDetails,
+          textEdit: val
+        }
+      };
+    });
+  };
 
   render() {
+    let update = (
+      <TouchableOpacity onPress={this.placeEditHandler}>
+      <Icon name="md-checkmark-circle-outline" size={30}/>
+      {/* //<Icon name="md-trash" color="red" size={30} /> */}
+      </TouchableOpacity>
+    );
+    if (this.props.isLoading) {
+      update = <ActivityIndicator size={30} color="red" />;
+    }
+
     return (
+     
       <View style={styles.viewContainer}>
+       <SafeAreaView>
         <Modal
           animationType="slide"
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => {}}
-        >
-        <ScrollView style={{backgroundColor:"#FFE4E1"}}>
-          <View style={styles.modalContainer}>
-            <Text style={{ fontSize: 23, fontWeight: "bold", color: "black" }}>
-              EDIT THIS ITEM
-            </Text>
+        > 
+         
+          <ScrollView style={{ backgroundColor: "#FFE4E1" }}>
+          
+            <View style={styles.modalContainer}>
+              <Text
+                style={{ fontSize: 23, fontWeight: "bold", color: "black" }}
+              >
+                EDIT THIS ITEM
+              </Text>
 
-            <Image
-              source={{
-                uri: this.state.itemImg
-              }}
-              style={{ width: 150, height: 150 }}
-            />
+              <Image
+                source={{
+                  uri: this.state.itemDetails.itemImg
+                }}
+                style={{ width: 150, height: 150 }}
+              />
 
-            <MapView
-              showsTraffic={true}
-              showsBuildings={true}
-              scrollEnabled={false}
-              initialRegion={{
-                latitude: this.state.itemLat,
-                longitude: this.state.itemLong,
-                latitudeDelta: 0.00122,
-                longitudeDelta: 0.0122
-              }}
-              style={{ width: "80%", height: 250, marginTop: 20 }}
-              onPress={this.pickLocationHandler}
-              ref={ref => (this.map = ref)}
-            >
-              <MapView.Marker
-                coordinate={{
-                  latitude: this.state.itemLat,
-                  longitude: this.state.itemLong,
+              <MapView
+                showsTraffic={true}
+                showsBuildings={true}
+                scrollEnabled={false}
+                initialRegion={{
+                  latitude: this.state.itemDetails.itemLat,
+                  longitude: this.state.itemDetails.itemLong,
                   latitudeDelta: 0.00122,
                   longitudeDelta: 0.0122
                 }}
+                style={{ width: "80%", height: 250, marginTop: 20 }}
+                onPress={this.pickLocationHandler}
+                ref={ref => (this.map = ref)}
+              >
+                <MapView.Marker
+                  coordinate={{
+                    latitude: this.state.itemDetails.itemLat,
+                    longitude: this.state.itemDetails.itemLong,
+                    latitudeDelta: 0.00122,
+                    longitudeDelta: 0.0122
+                  }}
+                />
+              </MapView>
+
+              <Text style={styles.textMsg}>
+                Your Caption: {this.state.itemDetails.itemText}
+              </Text>
+              <TextInput
+                style={styles.txtInput}
+                onChangeText={val => this.editText(val)}
+                value={this.state.itemDetails.textEdit}
+                placeholder="Enter something to edit your caption"
+                underlineColorAndroid="white"
               />
-            </MapView>
 
-            <Text style={styles.textMsg}>
-              Your Caption: {this.state.itemText}
-            </Text>
-            <TextInput
-              style={styles.txtInput}
-              onChangeText={val => this.editText(val)}
-              value={this.state.textEdit}
-              placeholder="Enter something to edit your caption"
-              underlineColorAndroid="white"
-            />
+              {update}
 
-            <TouchableOpacity onPress={this.placeEditHandler}>
-                <Text>Update this</Text>
-              </TouchableOpacity>
-           
               <TouchableOpacity onPress={() => this.setModalVisible(false)}>
                 <Text>Close this modal</Text>
               </TouchableOpacity>
-            
-          </View>
+            </View>
+           
           </ScrollView>
+         
         </Modal>
-
+        </SafeAreaView>
         {this.props.PlacesFromFireBase.map((item, index) => (
           <TouchableOpacity
             key={index}
@@ -222,11 +252,12 @@ class Saved extends Component {
     this.props.onLoadPlaces();
   }
 }
+
 const mapDispatchToProps = dispatch => {
   return {
     onLoadPlaces: () => dispatch(getPlaces()),
     onDeletePlace: key => dispatch(deletePlace(key)),
-    onEditPlace: (itemKey,itemDetails) => dispatch(updatePlace(itemKey,itemDetails))
+    onEditPlace: itemDetails => dispatch(updatePlace(itemDetails))
   };
 };
 
@@ -250,7 +281,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#D8D8D8"
   },
-  txtInput:{
+  txtInput: {
     width: "80%"
   },
   modalContainer: {

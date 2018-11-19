@@ -63,6 +63,7 @@ export const setPlaces = places => {
 export const getPlaces = () => {
   console.log("pumasok sa get places");
   return dispatch =>{
+    
   dispatch(authGetToken())
     .then(token => {
       return fetch(
@@ -92,19 +93,22 @@ export const getPlaces = () => {
 };
 }
 
-export const updatePlace = (itemKey,message) =>{
+export const updatePlace = (itemDetails) =>{
   return dispatch => {
     console.log("update okay dito")
+    dispatch(uiStartLoading());
     dispatch(authGetToken())
     .catch(()=>{
       alert("No valid token found")
     }) 
     
     .then(token =>{
-      return fetch("https://ordinal-tractor-221702.firebaseio.com/place/" + itemKey + ".json?auth=" +token,{
-        method: "PUT",
+      
+      return fetch("https://ordinal-tractor-221702.firebaseio.com/place/" + itemDetails.itemKey + ".json?auth=" +token,{
+        method: "PATCH",
         body: JSON.stringify({
-          message: message
+          message: itemDetails.textEdit,
+         
         })
 
          
@@ -114,6 +118,8 @@ export const updatePlace = (itemKey,message) =>{
       .then(parsedRes => {
         console.log(parsedRes)
         console.log("Done!");
+        dispatch(getPlaces())
+        dispatch(uiStopLoading())
         // dispatch(getPlaces())
         // dispatch(setPlaces())
       })
