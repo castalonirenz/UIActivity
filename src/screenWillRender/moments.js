@@ -127,14 +127,14 @@ class Saved extends Component {
     return (
       <View style={styles.viewContainer}>
         {RenderAll}
-        <SafeAreaView>
+       
           <Modal
             animationType="slide"
             transparent={true}
             visible={this.state.modalVisible}
             onRequestClose={() => {}}
           >
-            <ScrollView style={{ backgroundColor: "#FFE4E1" }}>
+            <ScrollView style={{ backgroundColor: "#88cbea" }}>
               <View style={styles.modalContainer}>
                 <Text
                   style={{ fontSize: 23, fontWeight: "bold", color: "black" }}
@@ -192,15 +192,15 @@ class Saved extends Component {
               </View>
             </ScrollView>
           </Modal>
-        </SafeAreaView>
+     
         
         {this.props.PlacesFromFireBase.map((item, index) => (
-          <TouchableOpacity
+          <View
             key={index}
             style={styles.container}
-            onPress={() => this.alertItemName(item)}
+            
           >
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", justifyContent:"space-between" }}>
               <Image
                 source={{
                   uri: item.image
@@ -268,7 +268,7 @@ class Saved extends Component {
                 </View>
               </View>
             </View>
-          </TouchableOpacity>
+          </View>
         ))}
       </View>
     );
@@ -298,11 +298,12 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    marginTop: 3,
+    marginTop: 10,
     backgroundColor: "white",
     width: "90%",
     borderBottomWidth: 1,
-    borderBottomColor: "#D8D8D8"
+    borderBottomColor: "#D8D8D8",
+    borderRadius: 10
   },
   txtInput: {
     width: "80%"
@@ -315,7 +316,7 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#313837",
  
   },
   map: {

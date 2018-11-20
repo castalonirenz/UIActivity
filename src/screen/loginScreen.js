@@ -92,9 +92,9 @@ class loginScreen extends Component {
     return (
       
       <View style={styles.container}>
-        <Header style={{ backgroundColor: "#00A795" }}>
+        <Header style={{ backgroundColor: "#313837" }}>
           <Left style={{ marginRight: "80%" }}>
-            <Icon name="ios-arrow-back" onPress={this.Back} />
+            <Icon name="ios-arrow-back"  onPress={this.Back} />
           </Left>
         </Header>
         
@@ -106,27 +106,30 @@ class loginScreen extends Component {
           <Text style={{ marginRight: "67%", color: "white", marginTop: 15 }}>
             EMAIL
           </Text>
+          
           <TextInput
             style={styles.textInputDesign}
             onChangeText={text => this.emailInput(text)}
             value={this.state.emailtext}
             placeholder="Enter Email Address"
-            underlineColorAndroid="white"
+            underlineColorAndroid="transparent"
           />
-          <Text style={{ marginRight: "57%", color: "white", marginTop: 15 }}>
+
+          <View style={{flexDirection:"row", alignItems:"center", marginTop:20}}>
+          <Text style={{ marginRight: "50%", color: "white"}}>
             PASSWORD
           </Text>
 
           <TouchableOpacity onPress={this.showPassword}>
-            <Text style={{ marginLeft: "67%", color: "white" }}>SHOW</Text>
+          <Ionicons name="md-eye" size={30} color="white"/>
           </TouchableOpacity>
-
+          </View>
           <TextInput
             style={styles.textInputDesign}
             onChangeText={text => this.PassInput(text)}
             value={this.state.passwordText}
             placeholder="Enter password"
-            underlineColorAndroid="white"
+            underlineColorAndroid="transparent"
             secureTextEntry={this.state.showPass}
           />
 
@@ -158,14 +161,14 @@ export default connect(mapStateToProps,mapDispatchToProps) (loginScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#00A795",
+    backgroundColor: "#313837",
    
   },
   MainContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00A795"
+    backgroundColor: "#313837"
   },
   secondContainer: {
     marginRight: "75%"
@@ -186,7 +189,12 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   textInputDesign: {
-    width: "80%"
+    width: "80%",
+    backgroundColor:"white",
+    borderRadius: 25,
+    textAlign: "center",
+    height: 60
+  
   }
 });
 

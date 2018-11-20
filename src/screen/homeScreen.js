@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00A795"
+    backgroundColor: "#313837"
   },
   secondContainer: {
     marginRight: "35%"

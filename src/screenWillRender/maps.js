@@ -8,7 +8,8 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+ 
 } from "react-native";
 //import PickImage from './selectImage'
 
@@ -48,17 +49,16 @@ class PickLocation extends Component {
   };
 
   sharePlace = () => {
-    if(!this.state.controls.image.valid){
-      alert("Please Select/Capture an image")
-    }
-    else{
-    this.props.addAll(
-      this.state.focusedLocation.latitude,
-      this.state.focusedLocation.longitude,
-      this.state.controls.image.value,
-      this.state.placeText,
-      this.state.heartCount
-    );
+    if (!this.state.controls.image.valid) {
+      alert("Please Select/Capture an image");
+    } else {
+      this.props.addAll(
+        this.state.focusedLocation.latitude,
+        this.state.focusedLocation.longitude,
+        this.state.controls.image.value,
+        this.state.placeText,
+        this.state.heartCount
+      );
     }
   };
 
@@ -136,11 +136,11 @@ class PickLocation extends Component {
     );
   };
 
-  HeartCount = (rating) =>{
+  HeartCount = rating => {
     this.setState({
       heartCount: rating
-    })
-  }
+    });
+  };
 
   Ratings = () => {
     const hearts = [];
@@ -148,7 +148,7 @@ class PickLocation extends Component {
     do {
       i < this.state.heartCount
         ? hearts.push(
-          <TouchableOpacity key={i} onPress={this.HeartCount.bind(this,i)}>
+            <TouchableOpacity key={i} onPress={this.HeartCount.bind(this, i)}>
               <Heart
                 name="md-heart"
                 size={30}
@@ -159,7 +159,10 @@ class PickLocation extends Component {
             </TouchableOpacity>
           )
         : hearts.push(
-            <TouchableOpacity key={i} onPress={this.HeartCount.bind(this,i+1)}>
+            <TouchableOpacity
+              key={i}
+              onPress={this.HeartCount.bind(this, i + 1)}
+            >
               <Heart
                 name="md-heart-outline"
                 size={30}
@@ -167,7 +170,7 @@ class PickLocation extends Component {
                 key={i}
                 style={{ paddingLeft: 5 }}
               />
-           </TouchableOpacity>
+            </TouchableOpacity>
           );
 
       i += 1;
@@ -175,12 +178,19 @@ class PickLocation extends Component {
     return hearts;
   };
 
-  componentDidUpdate() {}
+  componentDidMount() {
+    
+    this.getLocationHandler();
+  }
+
+  // componentDidUpdate(){
+  //   this.getLocationHandler();
+  // }
   render() {
     let marker = null;
     let addPlaceDetails = (
       <TouchableOpacity onPress={this.sharePlace}>
-        <Icon name="md-share-alt" size={30} color="blue" />
+        <Icon name="md-share-alt" size={30} color="#a5e5dc" />
       </TouchableOpacity>
     );
 
@@ -189,57 +199,76 @@ class PickLocation extends Component {
     }
 
     if (this.state.locationChosen) {
-      marker = <MapView.Marker coordinate={this.state.focusedLocation} />;
+      marker = <MapView.Marker coordinate={this.state.focusedLocation}>
+        <View style={{flex: 1, alignItems:"center", width: "100%"}}>
+        <View style={{backgroundColor:"#42d7f4", borderRadius:15}}>
+        <Text>You are Here</Text>
+        </View>
+        <Image style={{tintColor:"blue"}} source={require('../../assets/gpsIcon.png')}></Image>
+
+        </View>
+      </MapView.Marker>
     }
 
     return (
       <View style={styles.container}>
-        <MapView style={{borderRadius: 10}}
+
+      <View style={{width:"80%", paddingTop: 20}}>
+
+        <Text style={{fontSize: 18, color:"white"}}>What's Up?</Text>
+        <MapView
           showsTraffic={true}
           showsBuildings={true}
           initialRegion={this.state.focusedLocation}
           style={styles.map}
           onPress={this.pickLocationHandler}
           ref={ref => (this.map = ref)}
+          //onPoiClick={true}
+          
           
         >
           {marker}
         </MapView>
-        <TouchableOpacity onPress={this.getLocationHandler}>
-            <Icon name="md-locate" size={30} color="black" />
-          </TouchableOpacity>
-          <Text style={{ color: "black" }}>Locate Me</Text>
-        {/* <PickImage/> */}
+        </View>
         <View style={styles.placeholder}>
           <Image source={this.state.pickedImaged} style={styles.previewImage} />
         </View>
-        <TouchableOpacity onPress={this.pickImageHandler}>
-          <Icon name="ios-camera-outline" size ={50}/>
-          </TouchableOpacity>
+
         <View style={styles.button}>
           <View style={{ flexDirection: "row" }}>
-          
-          <Text>Rate your experience:</Text>
-          {this.Ratings()}
-        
+            <Text style={{color:"white"}}>Rate your experience:</Text>
+            {this.Ratings()}
           </View>
-         
         </View>
 
-    
-        <View style={{flexDirection:"row", alignItems:"center", paddingBottom: 10}}>
-        <TextInput
-          style={styles.textInputDesign}
-          onChangeText={text => this.placeInput(text)}
-          value={this.state.placeText}
-          placeholder="Tell me your experience"
-          underlineColorAndroid="transparent"
-        />
-            {addPlaceDetails}
+        <View
+          style={{
+            width:"90%",
+            flexDirection: "row",
+            alignItems: "center",
+            paddingBottom: 10,
+            justifyContent:"space-between"
+       
+          }}
+        >
+          <TouchableOpacity onPress={this.getLocationHandler}>
+            <Icon name="md-locate" size={30} color="#a5e5dc" />
+          </TouchableOpacity>
 
-      </View>
+          <TouchableOpacity onPress={this.pickImageHandler}>
+            <Icon name="ios-camera-outline" size={35} color="#a5e5dc" />
+          </TouchableOpacity>
 
-    
+          <TextInput
+            style={styles.textInputDesign}
+            onChangeText={text => this.placeInput(text)}
+            value={this.state.placeText}
+            placeholder="Tell me your experience"
+            underlineColorAndroid="transparent"
+            multiline={true}
+          />
+          {addPlaceDetails}
+        </View>
       </View>
     );
   }
@@ -254,7 +283,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addAll: (latLocation, longLocation, image, message, heartCount) =>
-      dispatch(addPlace(latLocation, longLocation, image, message,heartCount))
+      dispatch(addPlace(latLocation, longLocation, image, message, heartCount))
   };
 };
 export default connect(
@@ -268,8 +297,9 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   placeholder: {
-    alignItems:"center",
-    justifyContent:"center",
+    marginTop: 10,
+    alignItems: "center",
+    justifyContent: "center",
     borderWidth: 1,
     borderColor: "black",
     backgroundColor: "#eee",
@@ -281,11 +311,11 @@ const styles = StyleSheet.create({
     height: "100%"
   },
   textInputDesign: {
-    width: "80%",
-    
-    backgroundColor:"#b5bfce",
-    borderRadius: 25,
-    
+    width: "70%",
+    height: "80%",
+    textAlign: "center",
+    backgroundColor: "white",
+    borderRadius: 25
   },
   map: {
     width: "100%",

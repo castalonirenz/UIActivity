@@ -9,7 +9,7 @@ class messageScreen extends Component {
         <Text style={styles.HeaderStyle}> Moments</Text>
         
 
-        <ScrollView>
+        <ScrollView style={{backgroundColor:"#313837"}}>
           <Moments />
         </ScrollView>
       </View>
@@ -20,7 +20,7 @@ class messageScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "#313837"
   },
   HeaderStyle: {
     color: "black",

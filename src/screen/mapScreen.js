@@ -11,7 +11,7 @@ class MapScreen extends Component {
 
   render() {
     return (
-      <ScrollView >
+      <ScrollView style={{backgroundColor:"#313837"}} >
         <MapRender/>
         
         

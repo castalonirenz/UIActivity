@@ -63,7 +63,7 @@ class signUpOne extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header style={{ backgroundColor: "#00A795" }}>
+        <Header style={{ backgroundColor: "#88cbea" }}>
           <Left style={{ marginRight: "80%" }}>
             <Icon name="ios-arrow-back" onPress={this.Back} />
           </Left>
@@ -123,13 +123,13 @@ export default connect(null,mapDispatchToProps)(signUpOne);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#00A795"
+    backgroundColor: "#88cbea"
   },
   MainContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00A795"
+    backgroundColor: "#88cbea"
   },
   secondContainer: {
     marginRight: "28%"
