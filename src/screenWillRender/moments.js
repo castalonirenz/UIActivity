@@ -102,19 +102,31 @@ class Saved extends Component {
     } while (i < 5);
     return hearts;
   };
+
+  componentDidMount() {
+    this.props.onLoadPlaces();
+  }
   render() {
     let update = (
       <TouchableOpacity onPress={this.placeEditHandler}>
-        <Icon name="md-checkmark-circle-outline" size={30} />
+        <Icon name="md-checkmark-circle-outline" size={30}  color="blue"/>
         {/* //<Icon name="md-trash" color="red" size={30} /> */}
       </TouchableOpacity>
     );
-    if (this.props.isLoading) {
-      update = <ActivityIndicator size={30} color="red" />;
-    }
+    // if (this.props.isLoading) {
+    //   update = <ActivityIndicator size={30} color="red" />;
+    // }
+
+      let RenderAll ;
+      if(this.props.isLoading){
+
+        RenderAll =<ActivityIndicator size={50} color="gray"/>
+      }
+
 
     return (
       <View style={styles.viewContainer}>
+        {RenderAll}
         <SafeAreaView>
           <Modal
             animationType="slide"
@@ -181,6 +193,7 @@ class Saved extends Component {
             </ScrollView>
           </Modal>
         </SafeAreaView>
+        
         {this.props.PlacesFromFireBase.map((item, index) => (
           <TouchableOpacity
             key={index}
@@ -260,9 +273,7 @@ class Saved extends Component {
       </View>
     );
   }
-  componentDidMount() {
-    this.props.onLoadPlaces();
-  }
+ 
 }
 
 const mapDispatchToProps = dispatch => {
@@ -304,7 +315,8 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "white"
+    backgroundColor: "white",
+ 
   },
   map: {
     width: 200,

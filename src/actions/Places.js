@@ -6,45 +6,59 @@ import {
 } from "./actionTypes";
 import { uiStartLoading, uiStopLoading, authGetToken } from "./index";
 
-export const addPlace = (latLocation,longLocation,image,message,heartCount) => {
+export const addPlace = (
+  latLocation,
+  longLocation,
+  image,
+  message,
+  heartCount
+) => {
   return dispatch => {
+    let authToken;
     dispatch(uiStartLoading());
-    dispatch(getAddedPlaces(latLocation,longLocation,image,message,heartCount))
-    fetch(
-      "https://us-central1-ordinal-tractor-221702.cloudfunctions.net/storeImage",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          image: image.base64
-        })
-      }
-    )
+    dispatch(
+      getAddedPlaces(latLocation, longLocation, image, message, heartCount)
+    );
+    dispatch(authGetToken())
+      .catch(() => {
+        alert("No valid token found!");
+      })
+      .then(token => {
+        authToken = token
+        return fetch(
+          "https://us-central1-ordinal-tractor-221702.cloudfunctions.net/storeImage",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              image: image.base64
+            }),
+            headers: {
+              Authorization: "Bearer " + authToken
+            }
+          }
+        );
+      })
       .catch(err => {
         console.log(err);
-        alert("Something went wrong, please try again");
+        alert("Dito?");
         dispatch(uiStopLoading());
       })
       .then(res => res.json())
       .then(parsedRes => {
         const placeData = {
-          type: ADD_PLACE,
           lattitude: latLocation,
           longtitude: longLocation,
           image: parsedRes.imageUrl,
           message: message,
           rating: heartCount
         };
-        return fetch(
-          "https://ordinal-tractor-221702.firebaseio.com/place.json",
+       return fetch(
+          "https://ordinal-tractor-221702.firebaseio.com/place.json?auth=" + authToken,
           {
             method: "POST",
             body: JSON.stringify(placeData)
           }
         );
-      })
-      .catch(err => {
-        console.log("Something went wrong, please try again");
-        dispatch(uiStopLoading());
       })
       .then(res => res.json())
       .then(parsedRes => {
@@ -52,11 +66,23 @@ export const addPlace = (latLocation,longLocation,image,message,heartCount) => {
         dispatch(uiStopLoading());
         alert("Place added!");
         dispatch(getPlaces());
-      });
+      })
+      .catch(err => {
+        console.log("Something went wrong, please try again");
+        console.log(err)
+        dispatch(uiStopLoading());
+      })
+      
   };
 };
 
-export const getAddedPlaces = ( latLocation,longLocation,image,message, heartCount) => {
+export const getAddedPlaces = (
+  latLocation,
+  longLocation,
+  image,
+  message,
+  heartCount
+) => {
   return {
     type: ADD_PLACE,
     lattitude: latLocation,
@@ -64,19 +90,23 @@ export const getAddedPlaces = ( latLocation,longLocation,image,message, heartCou
     image: image,
     message: message,
     rating: heartCount
-
   };
 };
 export const setPlaces = places => {
   return {
-    type: SET_PLACES,
-    places: places
+ 
+      
+      type: SET_PLACES,
+      places: places
+    
+    
   };
 };
 
 export const getPlaces = () => {
   console.log("pumasok sa get places");
   return dispatch => {
+    dispatch(uiStartLoading())
     dispatch(authGetToken())
       .then(token => {
         return fetch(
@@ -98,10 +128,12 @@ export const getPlaces = () => {
           });
         }
         dispatch(setPlaces(places));
+        dispatch(uiStopLoading())
       })
       .catch(err => {
         alert("Something went wrong, sorry :/");
         console.log(err);
+        
       });
   };
 };

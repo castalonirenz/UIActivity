@@ -194,48 +194,52 @@ class PickLocation extends Component {
 
     return (
       <View style={styles.container}>
-        <MapView
+        <MapView style={{borderRadius: 10}}
           showsTraffic={true}
           showsBuildings={true}
           initialRegion={this.state.focusedLocation}
           style={styles.map}
           onPress={this.pickLocationHandler}
           ref={ref => (this.map = ref)}
+          
         >
           {marker}
         </MapView>
-        <View style={styles.button}>
-          <View style={{ flexDirection: "row" }}>
-          
-          {this.Ratings()}
-          <TouchableOpacity onPress={()=> alert(this.state.heartCount)}><Text>Count heart</Text></TouchableOpacity>
-          </View>
-          <TouchableOpacity onPress={this.getLocationHandler}>
-            <Icon name="md-locate" size={30} color="blue" />
+        <TouchableOpacity onPress={this.getLocationHandler}>
+            <Icon name="md-locate" size={30} color="black" />
           </TouchableOpacity>
           <Text style={{ color: "black" }}>Locate Me</Text>
-        </View>
-
         {/* <PickImage/> */}
         <View style={styles.placeholder}>
           <Image source={this.state.pickedImaged} style={styles.previewImage} />
         </View>
-
+        <TouchableOpacity onPress={this.pickImageHandler}>
+          <Icon name="ios-camera-outline" size ={50}/>
+          </TouchableOpacity>
         <View style={styles.button}>
-          <Button title="Pick Image" onPress={this.pickImageHandler} />
+          <View style={{ flexDirection: "row" }}>
+          
+          <Text>Rate your experience:</Text>
+          {this.Ratings()}
+        
+          </View>
+         
         </View>
 
+    
+        <View style={{flexDirection:"row", alignItems:"center", paddingBottom: 10}}>
         <TextInput
           style={styles.textInputDesign}
           onChangeText={text => this.placeInput(text)}
           value={this.state.placeText}
           placeholder="Tell me your experience"
-          underlineColorAndroid="white"
+          underlineColorAndroid="transparent"
         />
+            {addPlaceDetails}
 
-        <Text style={styles.textDesign}>Share your location</Text>
+      </View>
 
-        {addPlaceDetails}
+    
       </View>
     );
   }
@@ -264,6 +268,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   placeholder: {
+    alignItems:"center",
+    justifyContent:"center",
     borderWidth: 1,
     borderColor: "black",
     backgroundColor: "#eee",
@@ -276,8 +282,10 @@ const styles = StyleSheet.create({
   },
   textInputDesign: {
     width: "80%",
-    borderColor: "blue",
-    borderWidth: 0.5
+    
+    backgroundColor:"#b5bfce",
+    borderRadius: 25,
+    
   },
   map: {
     width: "100%",

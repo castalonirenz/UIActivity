@@ -86,7 +86,7 @@ class loginScreen extends Component {
     )
 
     if (this.props.isLoading) {
-      signInSubmit = <ActivityIndicator size={30} color="red"/>;
+      signInSubmit = <ActivityIndicator size={30} color="gray"/>;
     }
 
     return (
