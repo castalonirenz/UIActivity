@@ -7,7 +7,7 @@ import MommentScreen from '../screen/momentScreen'
 
 import messageScreen from "../screen/messageScreen";
 import MapScreen from "../screen/mapScreen";
-
+import profileScreen from '../screen/profileScreen'
 
 class tabNavigator extends Component {
   render() {
@@ -87,7 +87,7 @@ export const TabStack = createBottomTabNavigator(
       }
     },
     Profile: {
-      screen: messageScreen,
+      screen: profileScreen,
 
       navigationOptions: {
         tabBarLabel: "Profile",

@@ -11,6 +11,7 @@ import { Header, Left, Right, Icon } from "native-base";
 import {loginAction} from '../actions/login'
 import Ionicons from "react-native-vector-icons/Ionicons";
 import {connect} from 'react-redux'
+import { authAutoSignIn } from "../actions/index";
   
 class loginScreen extends Component {
   static navigationOptions = {
@@ -22,7 +23,9 @@ class loginScreen extends Component {
     userEnteredText: "",
     passwordText: "",
 
-    showPass: true
+    showPass: true,
+
+    
   };
 
   emailInput = value => {
@@ -30,7 +33,7 @@ class loginScreen extends Component {
       emailtext: value
     });
   };
-  PassInput = value => {
+  PassInput = value => {  
     this.setState({
       passwordText: value
     });
@@ -45,7 +48,7 @@ class loginScreen extends Component {
   Back = () => {
     this.props.navigation.goBack();
   };
-
+  
   componentDidUpdate(){
     if(this.props.isSuccessSign === true){
       this.props.navigation.navigate("Tab");
@@ -64,7 +67,7 @@ class loginScreen extends Component {
         passwordText: ""
       });
     this.props.loginScreen(this.state.emailtext,this.state.passwordText)
-   
+    this.props.onAutoSignIn;
     }
 
   
@@ -152,7 +155,8 @@ const mapStateToProps = state =>{
 }
 const mapDispatchToProps = dispatch=>{
   return{
-    loginScreen: (email,pass) => dispatch(loginAction(email,pass))
+    loginScreen: (email,pass) => dispatch(loginAction(email,pass)),
+    onAutoSignIn: () => dispatch(authAutoSignIn())
   }
 }
 

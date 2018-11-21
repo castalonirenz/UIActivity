@@ -1,9 +1,13 @@
-import { SIGN_UP_SUCCESS, SIGN_UP_FAILED, SIGN_IN_SUCCESS, SIGN_IN_FAILED,AUTH_SET_TOKEN } from "../actions/actionTypes";
+import { SIGN_UP_SUCCESS, SIGN_UP_FAILED, SIGN_IN_SUCCESS, SIGN_IN_FAILED,AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from "../actions/actionTypes";
 
 const initialState = {
   isSuccess: false,
   isSuccessSign: false,
-  token: null
+
+  isToken: null,
+  token: null,
+  expiryDate: null
+ 
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,8 +35,16 @@ const reducer = (state = initialState, action) => {
       case AUTH_SET_TOKEN:
       return {
         ...state,
-        token: action.token
+        token: action.token,
+        expiryDate: action.expiryDate
       };
+      case AUTH_REMOVE_TOKEN:
+      return{
+        ...state,
+        expiryDate: null,
+        token: null
+      }
+    
     default:
       return state;
   }

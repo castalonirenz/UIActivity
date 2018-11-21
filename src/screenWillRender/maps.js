@@ -213,8 +213,9 @@ class PickLocation extends Component {
     return (
       <View style={styles.container}>
 
+     
       <View style={{width:"80%", paddingTop: 20}}>
-
+        
         <Text style={{fontSize: 18, color:"white"}}>What's Up?</Text>
         <MapView
           showsTraffic={true}
@@ -229,6 +230,7 @@ class PickLocation extends Component {
         >
           {marker}
         </MapView>
+     
         </View>
         <View style={styles.placeholder}>
           <Image source={this.state.pickedImaged} style={styles.previewImage} />

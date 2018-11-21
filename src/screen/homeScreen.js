@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-
+import { authAutoSignIn } from "../actions/index";
+import {connect} from 'react-redux'
 class homeScreen extends Component {
   login = () => {
     this.props.navigation.navigate("Login");
@@ -8,7 +9,20 @@ class homeScreen extends Component {
   signUp = () => {
     this.props.navigation.navigate("SignUpOne");
   };
-
+  
+  componentDidMount(){
+    this.props.onAutoSignIn();
+    if(this.props.tokenExist !== null){
+      this.props.navigation.navigate("Tab");
+    }
+    
+  }
+  componentDidUpdate(){
+    this.props.onAutoSignIn();
+    if(this.props.tokenExist !== null){
+      this.props.navigation.navigate("Tab");
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -25,6 +39,23 @@ class homeScreen extends Component {
     );
   }
 }
+
+const mapStateToProps = state =>{
+  return{
+    tokenExist: state.auth.token,
+    
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    onAutoSignIn: () => dispatch(authAutoSignIn())
+  }
+
+}
+
+export default connect(mapStateToProps,mapDispatchToProps) (homeScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -52,4 +83,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default homeScreen;
+

@@ -1,14 +1,7 @@
 import {SIGN_UP_ONE,SIGN_UP_TWO,SIGN_UP_LAST, AUTH_SET_TOKEN} from './actionTypes'
 import {uiStartLoading,uiStopLoading,signUpSuccess,signUpFailed} from './index'
-import {authSetToken} from './index'
-import signUpLast from '../screen/signUpLast';
+import {authSetToken,authStoreToken} from './index'
 
-
-// export const tryAuth = (signUpData) => {
-//     return dispatch => {
-//         dispatch(signUpLastAction(signUpData));
-//     };
-// };
 
 
 export const signUpOneAction = (firstNameText, lastNameText) =>{

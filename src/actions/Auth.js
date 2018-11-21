@@ -1,4 +1,4 @@
-import { SIGN_UP_SUCCESS, SIGN_UP_FAILED, SIGN_IN_FAILED, SIGN_IN_SUCCESS } from './actionTypes';
+import { SIGN_UP_SUCCESS, SIGN_UP_FAILED, SIGN_IN_FAILED, SIGN_IN_SUCCESS,TOKEN_CHECKER } from './actionTypes';
 
 export const signUpSuccess = () => {
     return {
@@ -23,3 +23,4 @@ export const signInFailed = () =>{
         type: SIGN_IN_FAILED
     }
 }
+
