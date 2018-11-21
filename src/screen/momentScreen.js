@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#313837"
   },
   HeaderStyle: {
-    color: "black",
+    color: "white",
     fontWeight: "bold",
     fontSize: 26,
     marginLeft: 10

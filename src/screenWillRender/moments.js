@@ -21,7 +21,7 @@ import MapView from "react-native-maps";
 class Saved extends Component {
   state = {
     myArray: [],
-   
+
     modalVisible: false,
 
     itemDetails: {
@@ -93,9 +93,23 @@ class Saved extends Component {
     let i = 0;
     do {
       i < val
-        ? hearts.push(<Heart name="md-heart" size={30} color="red" key={i} style={{paddingLeft: 5}}/>)
+        ? hearts.push(
+            <Heart
+              name="md-heart"
+              size={30}
+              color="red"
+              key={i}
+              style={{ paddingLeft: 5 }}
+            />
+          )
         : hearts.push(
-            <Heart name="md-heart-outline" size={30} color="red" key={i} style={{paddingLeft: 5}}/>
+            <Heart
+              name="md-heart-outline"
+              size={30}
+              color="red"
+              key={i}
+              style={{ paddingLeft: 5 }}
+            />
           );
 
       i += 1;
@@ -109,7 +123,7 @@ class Saved extends Component {
   render() {
     let update = (
       <TouchableOpacity onPress={this.placeEditHandler}>
-        <Icon name="md-checkmark-circle-outline" size={30}  color="blue"/>
+        <Icon name="md-checkmark-circle-outline" size={30} color="blue" />
         {/* //<Icon name="md-trash" color="red" size={30} /> */}
       </TouchableOpacity>
     );
@@ -117,90 +131,84 @@ class Saved extends Component {
     //   update = <ActivityIndicator size={30} color="red" />;
     // }
 
-      let RenderAll ;
-      if(this.props.isLoading){
-
-        RenderAll =<ActivityIndicator size={50} color="gray"/>
-      }
-
+    let RenderAll;
+    if (this.props.isLoading) {
+      RenderAll = <ActivityIndicator size={50} color="gray" />;
+    }
 
     return (
       <View style={styles.viewContainer}>
         {RenderAll}
-       
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={this.state.modalVisible}
-            onRequestClose={() => {}}
-          >
-            <ScrollView style={{ backgroundColor: "#88cbea" }}>
-              <View style={styles.modalContainer}>
-                <Text
-                  style={{ fontSize: 23, fontWeight: "bold", color: "black" }}
-                >
-                  EDIT THIS ITEM
-                </Text>
 
-                <Image
-                  source={{
-                    uri: this.state.itemDetails.itemImg
-                  }}
-                  style={{ width: 150, height: 150 }}
-                />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {}}
+        >
+          <ScrollView style={{ backgroundColor: "#88cbea" }}>
+            <View style={styles.modalContainer}>
+              <Text
+                style={{ fontSize: 23, fontWeight: "bold", color: "black" }}
+              >
+                EDIT THIS ITEM
+              </Text>
 
-                <MapView
-                  showsTraffic={true}
-                  showsBuildings={true}
-                
-                  initialRegion={{
+              <Image
+                source={{
+                  uri: this.state.itemDetails.itemImg
+                }}
+                style={{ width: 150, height: 150 }}
+              />
+
+              <MapView
+                showsTraffic={true}
+                showsBuildings={true}
+                initialRegion={{
+                  latitude: this.state.itemDetails.itemLat,
+                  longitude: this.state.itemDetails.itemLong,
+                  latitudeDelta: 0.00122,
+                  longitudeDelta: 0.0122
+                }}
+                style={{ width: "80%", height: 250, marginTop: 20 }}
+                onPress={this.pickLocationHandler}
+                ref={ref => (this.map = ref)}
+              >
+                <MapView.Marker
+                  coordinate={{
                     latitude: this.state.itemDetails.itemLat,
                     longitude: this.state.itemDetails.itemLong,
                     latitudeDelta: 0.00122,
                     longitudeDelta: 0.0122
                   }}
-                  style={{ width: "80%", height: 250, marginTop: 20 }}
-                  onPress={this.pickLocationHandler}
-                  ref={ref => (this.map = ref)}
-                >
-                  <MapView.Marker
-                    coordinate={{
-                      latitude: this.state.itemDetails.itemLat,
-                      longitude: this.state.itemDetails.itemLong,
-                      latitudeDelta: 0.00122,
-                      longitudeDelta: 0.0122
-                    }}
-                  />
-                </MapView>
-
-                <Text style={styles.textMsg}>
-                  Your Caption: {this.state.itemDetails.itemText}
-                </Text>
-                <TextInput
-                  style={styles.txtInput}
-                  onChangeText={val => this.editText(val)}
-                  value={this.state.itemDetails.textEdit}
-                  placeholder="Enter something to edit your caption"
-                  underlineColorAndroid="white"
                 />
+              </MapView>
 
-                {update}
+              <Text style={styles.textMsg}>
+                Your Caption: {this.state.itemDetails.itemText}
+              </Text>
+              <TextInput
+                style={styles.txtInput}
+                onChangeText={val => this.editText(val)}
+                value={this.state.itemDetails.textEdit}
+                placeholder="Enter something to edit your caption"
+                underlineColorAndroid="white"
+              />
 
-                <TouchableOpacity onPress={() => this.setModalVisible(false)}>
-                  <Text>Close this modal</Text>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          </Modal>
-     
-        
+              {update}
+
+              <TouchableOpacity onPress={() => this.setModalVisible(false)}>
+                <Text>Close this modal</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </Modal>
+
         {this.props.PlacesFromFireBase.map((item, index) => (
-          <View
-            key={index}
-            style={styles.container}
-            
-          >
-            <View style={{ flexDirection: "row", justifyContent:"space-between" }}>
+          <View key={index} style={styles.container}>
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
               <Image
                 source={{
                   uri: item.image
@@ -233,9 +241,8 @@ class Saved extends Component {
               </MapView>
             </View>
             <View style={{ flex: 1, flexDirection: "column" }}>
-
-             <View style={{flexDirection:"row"}}>
-              {this.renderHeart(item.rating)}
+              <View style={{ flexDirection: "row" }}>
+                {this.renderHeart(item.rating)}
               </View>
               <Text>Location Details:</Text>
               <Text>Lattitude: {" " + item.lattitude}</Text>
@@ -273,7 +280,6 @@ class Saved extends Component {
       </View>
     );
   }
- 
 }
 
 const mapDispatchToProps = dispatch => {
@@ -316,8 +322,7 @@ const styles = StyleSheet.create({
   viewContainer: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#313837",
- 
+    backgroundColor: "#313837"
   },
   map: {
     width: 200,

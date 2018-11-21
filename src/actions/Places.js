@@ -5,7 +5,7 @@ import {
   AUTH_SET_TOKEN
 } from "./actionTypes";
 import { uiStartLoading, uiStopLoading, authGetToken } from "./index";
-
+import {  authSetToken, authStoreToken } from '../actions/login';
 export const addPlace = (
   latLocation,
   longLocation,
@@ -62,10 +62,14 @@ export const addPlace = (
       })
       .then(res => res.json())
       .then(parsedRes => {
-        console.log(parsedRes);
+        
         dispatch(uiStopLoading());
+      
         alert("Place added!");
+       
         dispatch(getPlaces());
+      
+        
       })
       .catch(err => {
         console.log("Something went wrong, please try again");
@@ -109,6 +113,7 @@ export const getPlaces = () => {
     dispatch(uiStartLoading())
     dispatch(authGetToken())
       .then(token => {
+       
         return fetch(
           "https://ordinal-tractor-221702.firebaseio.com/place.json?auth=" +
             token
@@ -127,7 +132,9 @@ export const getPlaces = () => {
             key: key
           });
         }
+    
         dispatch(setPlaces(places));
+       
         dispatch(uiStopLoading())
       })
       .catch(err => {

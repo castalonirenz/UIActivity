@@ -61,19 +61,22 @@ export const loginAction = (email, password) => {
 
 export const authStoreToken = (token, expiresIn, refreshToken) => {
   return dispatch => {
-    dispatch(authSetToken(token));
+    
     const now = new Date();
-    const expiryDate = now.getTime() + expiresIn * 1000;
+    const expiryDate = now.getTime() + 5 * 1000;
+    dispatch(authSetToken(token, expiryDate));
+    console.log("SET TOKEN HAS BEEN DISPATCHED!!")
     AsyncStorage.setItem("ap:auth:token", token);
     AsyncStorage.setItem("ap:auth:expiryDate", expiryDate.toString());
     AsyncStorage.setItem("ap:auth:refreshToken", refreshToken);
   };
 };
 
-export const authSetToken = token => {
+export const authSetToken = (token, expiryDate) => {
   return {
     type: AUTH_SET_TOKEN,
-    token: token
+    token: token,
+    expiryDate: expiryDate
   };
 };
 
@@ -81,7 +84,8 @@ export const authGetToken = () => {
   return (dispatch, getState) => {
     const promise = new Promise((resolve, reject) => {
       const token = getState().auth.token;
-      if (!token) {
+      const expiryDate = getState().auth.expiryDate;
+      if (!token || new Date(expiryDate) <= new Date()) {
         let fetchToken;
         AsyncStorage.getItem("ap:auth:token")
           .catch(err => reject())
@@ -108,9 +112,6 @@ export const authGetToken = () => {
         resolve(token);
       }
     });
-    promise.catch(err => {
-      dispatch(authClearStorage());
-    });
     return promise
       .catch(err => {
         return AsyncStorage.getItem("ap:auth:refreshToken")
@@ -129,7 +130,7 @@ export const authGetToken = () => {
           .then(res => res.json())
           .then(parsedRes => {
             if (parsedRes.id_token) {
-              console.log("Token worked");
+              console.log("TOKEN SUCCESS!!");
               dispatch(
                 authStoreToken(
                   parsedRes.id_token,
@@ -139,6 +140,7 @@ export const authGetToken = () => {
               );
               return parsedRes.id_token;
             } else {
+              console.log("This storage were cleared")
               dispatch(authClearStorage());
             }
           });
@@ -158,7 +160,7 @@ export const authAutoSignIn = () => {
     dispatch(authGetToken())
       .then(token => {
         console.log("token checker");
-        console.log(token);
+       // console.log(token);
         dispatch(authSetToken(token));
       })
       .catch(err => {
