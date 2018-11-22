@@ -50,7 +50,8 @@ export const addPlace = (
           longtitude: longLocation,
           image: parsedRes.imageUrl,
           message: message,
-          rating: heartCount
+          rating: heartCount,
+          imagePath: parsedRes.imagePath
         };
        return fetch(
           "https://ordinal-tractor-221702.firebaseio.com/place.json?auth=" + authToken,
@@ -93,7 +94,7 @@ export const getAddedPlaces = (
     longtitude: longLocation,
     image: image,
     message: message,
-    rating: heartCount
+    rating: heartCount,
   };
 };
 export const setPlaces = places => {

@@ -65,7 +65,8 @@ exports.storeImage = functions.https.onRequest((request, response) => {
                   "/o/" +
                   encodeURIComponent(file.name) +
                   "?alt=media&token=" +
-                  uuid
+                  uuid,
+                  imagePath: "/happyPlaces/" + uuid + ".jpg"
               });
             } else {
               console.log(err);
@@ -82,11 +83,12 @@ exports.storeImage = functions.https.onRequest((request, response) => {
 });
 
 exports.deleteImage = functions.database
-  .ref("/happyPlaces/")
+  .ref("/place/{placeId}")
   .onDelete(event => {
-    const placeData = event.data.previous.val();
+    console.log(event);
+    const placeData = event._data;
     const imagePath = placeData.imagePath;
 
-    const bucket = gcs.bucket("ordinal-tractor-221702.appspot.com");
+    const bucket = gcconfig.bucket("ordinal-tractor-221702.appspot.com");
     return bucket.file(imagePath).delete();
   });
