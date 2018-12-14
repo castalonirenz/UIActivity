@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+
+import { signUpOneAction } from "../actions/signUp";
+
 import {
   View,
   Text,
@@ -9,6 +12,8 @@ import {
 import { Header, Left, Right, Icon } from "native-base";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { connect } from "react-redux";
+
 class signUpOne extends Component {
   static navigationOptions = {
     header: null
@@ -41,8 +46,15 @@ class signUpOne extends Component {
         firstNameText: "",
         lastNameText: ""
       });
+
+      this.props.addFirstLastName(
+        this.state.firstNameText,
+        this.state.lastNameText
+      );
       this.props.navigation.navigate("SignUpTwo");
     }
+
+    //  alert(this.state.lastNameText)
   };
   Back = () => {
     this.props.navigation.goBack();
@@ -51,7 +63,7 @@ class signUpOne extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header style={{ backgroundColor: "#00A795" }}>
+        <Header style={{ backgroundColor: "#88cbea" }}>
           <Left style={{ marginRight: "80%" }}>
             <Icon name="ios-arrow-back" onPress={this.Back} />
           </Left>
@@ -100,16 +112,24 @@ class signUpOne extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    addFirstLastName: (fname, lname) => dispatch(signUpOneAction(fname, lname))
+  };
+};
+
+export default connect(null,mapDispatchToProps)(signUpOne);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#00A795"
+    backgroundColor: "#88cbea"
   },
   MainContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00A795"
+    backgroundColor: "#88cbea"
   },
   secondContainer: {
     marginRight: "28%"
@@ -133,5 +153,3 @@ const styles = StyleSheet.create({
     width: "80%"
   }
 });
-
-export default signUpOne;

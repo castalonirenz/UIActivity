@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "ordinal-tractor-221702",
+  "private_key_id": "b4b4bda1ceb948700441a7eb938165170e8ebfe8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDQ2mvx/27pxhK1\nQLcRDEBWrQTn2dYGdrK8lK5Rt5zq7hbElWWYMD7kX75DgOumWYJP1n5XHSFpEsht\nCFW41dLEAU8MS8UEj2eqMLmAtVqjoNGXVMpU/mcqseHmXQtGn59yHYQlcWnXRlqb\nGzkKKWSr7vyH2SMGontH2gTTGO80QIeHKeChi6FxxnNqvQvp2sJ6hNiXk9FrNldP\nfuUaqO5VxmJVizzOXjCo1YuFdQ4WaBfy6h278u7HIeGle/asLxu8ojyojl/NrlZa\nL0U2H2D0d4TF48eFyEplOSs84viNLebWU6W8SL06D9VMRMj059yIYstp2ABW0Hdv\n2t+zPF8hAgMBAAECggEAFVjF4Lm9cep7XghLzdPFPba4giQbQpTeRvUhbhvIz6Bf\nNl+YvznrK7d3gHnMXDfY4GUpi6jgEdfIIZDRBi/gt4T0ueqCrCkmLNiHFVcz+PaG\nhaO2fIJ2NABzePK4pNLK3sSSjasuaMD5oNHi/h1l+0bVi+MPN+3ikOEBTjxFsr7Y\ndbMcHzBphrgd4fzIU/DJRiocyk0OH0aiwETrwXqVWIjsgs7lL907h492LZdK5EO3\nRjCaz2gUvSLFsy08iIYaQSFuEKbt5gUbDXB17cIU0CkaMfLCInKRMUZHY5Jwtbt+\nF5atVgMCu4h18Z4OSoM0Oa+bHBmImkNmAzEALssWOQKBgQDqSlySnV4l/U8I6Xw4\nwJRnpqZA7FbhtBKF20CmYnJX9aNizeSinvMk1FQ7htkuPF1N7B6b9aysLrFdOh47\n8Rkl/hwozzIClPcPml59FkN65RZYrImHrjKr5PDPueXrVpXAZpHOUM/m7xyIhIhs\neyyzZwEl3loVLD6Ii9os0Ir6JQKBgQDkNKiy/qKD4HuY0g7OIImqr1tkum92fvNH\n6bK2P6mIhGUTEbv3T7cLuS4QzMY9O+m/p3JnHguNb6k4Hr4RV0Gmqc2Eh79dW3Sa\nZ9uBvRD65gMpprOn9TbkRfHYi8QT4Che4XaOTXBc0RYi1WEjuEsZC4cH/D9Fuv51\n2jMOHlv6TQKBgHDnUOEekOZBwbqLud8nftzMREX5Ho0518tFs0v7GRsmNoxAqDNt\n4cIXyFe/Th2n3VbVuJJzu7hl7/b7MOK19uaGJE/OOU1hOAX+4BXriq1IhJJK4yPN\nYIHRm/KepRvZ5+SGCTGhY+7nv5pSM+QDH7F8q+Lx2ftmDOSEcKkz/iU5AoGBANCC\n0PWjtgg7T5NFs2Nh1YfQa/hwZLHnsxAtFy5wos3q8pNm69E/0+dxTwboo+WFXcHR\nFLXlfPbBZOOzK0Wa7ZCDrBYBFrgNfVArvyQfBWnKSm9/Mr4vTvVqd1y97+2dLiXr\najEBzr3wCYLQZs6FcJC0uK9yKrni7uft9CJdWPstAoGAV+k3hjItnKrG/w4OFCqu\nszwrmbOmwbrGJXFCkiykdu7pk2u6NWKfwJwXi3stS2FIrFHhKKLRoJhbZzS8yXW9\nUdSmnjozMbp8/RpdoAoX6MLApetD5owXO/OTZoXE+P2AwLOOsgAefSaTU/sAi2cH\npmRfoNHnYR3po1JYWCSC4cg=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-z2m8z@ordinal-tractor-221702.iam.gserviceaccount.com",
+  "client_id": "110402384147972239399",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-z2m8z%40ordinal-tractor-221702.iam.gserviceaccount.com"
+}

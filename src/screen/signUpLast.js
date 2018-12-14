@@ -3,19 +3,28 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
-  TouchableOpacity
+  ActivityIndicator,
+  TouchableOpacity,
+  Alert
+  
 } from "react-native";
 import { Header, Left, Right, Icon, DatePicker } from "native-base";
-
+import {connect} from 'react-redux'
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { signUpLastAction } from "../actions/signUp";
+
+
 class signUpLast extends Component {
+  
   static navigationOptions = {
     header: null
   };
 
   state = {
-    emailText: ""
+    firstNameText: "",
+    lastNameText: "",
+    emailText: "",
+   
   };
   Back = () => {
     this.props.navigation.goBack();
@@ -29,15 +38,58 @@ class signUpLast extends Component {
   setDate(newDate) {
     this.setState({ chosenDate: newDate });
   }
-  goToLogin = () => {
-    alert("Registration Complete, Proceeding to Login");
-    this.props.navigation.navigate("Login");
-  };
 
+
+  componentDidUpdate(){
+    if(this.props.isSuccess===true){
+     
+          this.props.navigation.navigate("Login")
+    
+    }
+  
+    else{
+      if(this.props.isLoading === false){
+      this.props.navigation.goBack();
+      }
+    }
+
+   
+  
+    
+  }
+
+ goToLogin = () => {
+ 
+ 
+   console.log(this.props.isSuccess)
+    this.props.addAll(this.props.firstname,this.props.lastname,
+      this.props.email,this.props.pass,this.state.chosenDate.toString().substr(4, 12));
+
+    
+}
+
+  
   render() {
+    let signUpSubmit =(
+      <TouchableOpacity
+      style={{ marginLeft: "75%" }}
+      onPress={this.goToLogin}
+    >
+      <Ionicons
+        name="ios-arrow-dropright-circle"
+        color="white"
+        size={50}
+      />
+    </TouchableOpacity>
+    );
+
+    if (this.props.isLoading) {
+      signUpSubmit = <ActivityIndicator size={30} color="red"/>;
+    }
+
     return (
       <View style={styles.container}>
-        <Header style={{ backgroundColor: "#00A795" }}>
+        <Header style={{ backgroundColor: "#88cbea" }}>
           <Left style={{ marginRight: "80%" }}>
             <Icon name="ios-arrow-back" onPress={this.Back} />
           </Left>
@@ -65,10 +117,11 @@ class signUpLast extends Component {
             minimumDate={new Date(1950, 1, 1)}
             maximumDate={new Date(2018, 12, 31)}
             locale={"en"}
-            timeZoneOffsetInMinutes={undefined}
+            
+            timeZoneOffsetInMinutes={false}
             modalTransparent={false}
             animationType={"fade"}
-            androidMode={"default"}
+            androidMode={"calendar"}
             placeHolderText="Select date"
             textStyle={{ color: "white" }}
             placeHolderTextStyle={{ color: "#d3d3d3" }}
@@ -76,21 +129,38 @@ class signUpLast extends Component {
           />
            <Text>Date: {this.state.chosenDate.toString().substr(4, 12)}</Text>
           </View>
-         
+
+         {signUpSubmit}
           
-          <TouchableOpacity style={{ marginLeft: "75%" }}>
-            <Ionicons
-              name="ios-arrow-dropright-circle"
-              color="white"
-              size={50}
-              onPress={this.goToLogin}
-            />
-          </TouchableOpacity>
+         
+
         </View>
       </View>
     );
   }
 }
+
+const mapStateToProps = state =>{
+  return{
+    firstname: state.signup.firstNameText,
+    lastname: state.signup.lastNameText,
+    email: state.signup.emailText,
+    pass: state.signup.passText,
+    isLoading: state.ui.isLoading,
+    isSuccess: state.auth.isSuccess
+
+    
+  }
+
+}
+
+const mapDispatchToProps = dispatch=>{
+  return{
+    addAll: (fname,lname,email,pass,birthday) => dispatch(signUpLastAction(fname,lname,email,pass,birthday))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps) (signUpLast);
 
 const styles = StyleSheet.create({
   container: {
@@ -102,7 +172,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00A795"
+    backgroundColor: "#88cbea"
   },
   secondContainer: {
     marginRight: "28%"
@@ -128,4 +198,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export default signUpLast;
+
+
+

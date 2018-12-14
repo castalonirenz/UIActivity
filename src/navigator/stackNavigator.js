@@ -5,6 +5,9 @@ import signUpOne from '../screen/signUpOne';
 import signUpTwo from '../screen/signUpTwo';
 import signUpLast from '../screen/signUpLast';
 import homeScreen from '../screen/homeScreen'
+import profileScreen from '../screen/profileScreen'
+
+
 import { createStackNavigator, createSwitchNavigator} from "react-navigation";
 
 import { TabStack } from './tabNavigator';
@@ -16,6 +19,9 @@ const RootStack = createStackNavigator(
       SignUpOne: signUpOne,
       SignUpTwo: signUpTwo,
       SignUpLast: signUpLast,
+      
+   
+   
       
     },
     {

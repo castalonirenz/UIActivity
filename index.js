@@ -5,4 +5,17 @@ YellowBox.ignoreWarnings([
   "Warning: isMounted(...) is deprecated",
   "Module RCTImageLoader"
 ]);
-AppRegistry.registerComponent('NewActivity', () => App);
+import { Provider } from 'react-redux'
+import configureStore from './src/configureStore'
+import React from 'react'
+
+
+const store = configureStore();
+const RNRedux = () =>(
+  <Provider store={store}>
+  <App/>
+  </Provider>
+)
+
+
+AppRegistry.registerComponent('NewActivity', () => RNRedux);

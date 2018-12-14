@@ -6,7 +6,7 @@ import SavedListRender from "../screenWillRender/saved_list";
 class exploreScreen extends Component {
   render() {
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor:"#88cbea"}}>
         <View style={styles.container}>
           <Text style={{ color: "black", fontWeight: "bold", fontSize: 30 }}>
             {" "}
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "white"
+    backgroundColor: "#88cbea"
   }
 });
 

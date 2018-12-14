@@ -4,11 +4,15 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import { Header, Left, Right, Icon } from "native-base";
-
+import {loginAction} from '../actions/login'
 import Ionicons from "react-native-vector-icons/Ionicons";
+import {connect} from 'react-redux'
+import { authAutoSignIn } from "../actions/index";
+  
 class loginScreen extends Component {
   static navigationOptions = {
     header: null
@@ -19,7 +23,9 @@ class loginScreen extends Component {
     userEnteredText: "",
     passwordText: "",
 
-    showPass: true
+    showPass: true,
+
+    
   };
 
   emailInput = value => {
@@ -27,7 +33,7 @@ class loginScreen extends Component {
       emailtext: value
     });
   };
-  PassInput = value => {
+  PassInput = value => {  
     this.setState({
       passwordText: value
     });
@@ -42,6 +48,14 @@ class loginScreen extends Component {
   Back = () => {
     this.props.navigation.goBack();
   };
+  
+  componentDidUpdate(){
+    if(this.props.isSuccessSign === true){
+      this.props.navigation.navigate("Tab");
+      
+    }
+    
+  }
   loggedOn = () => {
     if (this.state.emailtext === "") {
       alert("Please fill out email");
@@ -52,75 +66,113 @@ class loginScreen extends Component {
         emailtext: "",
         passwordText: ""
       });
-      this.props.navigation.navigate("Tab");
+    this.props.loginScreen(this.state.emailtext,this.state.passwordText)
+    this.props.onAutoSignIn;
     }
-  };
 
+  
+  };
+  
   render() {
+    console.log("log screen in starter")
+    let signInSubmit = (
+      <TouchableOpacity
+      style={{ marginLeft: "75%" }}
+      onPress={this.loggedOn}
+    >
+      <Ionicons
+        name="ios-arrow-dropright-circle"
+        color="white"
+        size={50}
+      />
+    </TouchableOpacity>
+    )
+
+    if (this.props.isLoading) {
+      signInSubmit = <ActivityIndicator size={30} color="gray"/>;
+    }
+
     return (
+      
       <View style={styles.container}>
-        <Header style={{ backgroundColor: "#00A795" }}>
+        <Header style={{ backgroundColor: "#313837" }}>
           <Left style={{ marginRight: "80%" }}>
-            <Icon name="ios-arrow-back" onPress={this.Back} />
+            <Icon name="ios-arrow-back"  onPress={this.Back} />
           </Left>
         </Header>
+        
         <View style={styles.MainContainer}>
           <View style={styles.secondContainer}>
+         
             <Text style={styles.textDesign}>Login</Text>
           </View>
           <Text style={{ marginRight: "67%", color: "white", marginTop: 15 }}>
             EMAIL
           </Text>
+          
           <TextInput
             style={styles.textInputDesign}
             onChangeText={text => this.emailInput(text)}
             value={this.state.emailtext}
             placeholder="Enter Email Address"
-            underlineColorAndroid="white"
+            underlineColorAndroid="transparent"
           />
-          <Text style={{ marginRight: "57%", color: "white", marginTop: 15 }}>
+
+          <View style={{flexDirection:"row", alignItems:"center", marginTop:20}}>
+          <Text style={{ marginRight: "50%", color: "white"}}>
             PASSWORD
           </Text>
 
           <TouchableOpacity onPress={this.showPassword}>
-            <Text style={{ marginLeft: "67%", color: "white" }}>SHOW</Text>
+          <Ionicons name="md-eye" size={30} color="white"/>
           </TouchableOpacity>
-
+          </View>
           <TextInput
             style={styles.textInputDesign}
             onChangeText={text => this.PassInput(text)}
             value={this.state.passwordText}
             placeholder="Enter password"
-            underlineColorAndroid="white"
+            underlineColorAndroid="transparent"
             secureTextEntry={this.state.showPass}
           />
 
-          <TouchableOpacity
-            style={{ marginLeft: "75%" }}
-            onPress={this.loggedOn}
-          >
-            <Ionicons
-              name="ios-arrow-dropright-circle"
-              color="white"
-              size={50}
-            />
-          </TouchableOpacity>
+          {signInSubmit}
+          
         </View>
+        
       </View>
+      
     );
   }
+
 }
+const mapStateToProps = state =>{
+  return{
+    isSuccessSign: state.auth.isSuccessSign,
+    isLoading: state.ui.isLoading,
+  }
+  
+}
+const mapDispatchToProps = dispatch=>{
+  return{
+    loginScreen: (email,pass) => dispatch(loginAction(email,pass)),
+    onAutoSignIn: () => dispatch(authAutoSignIn())
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps) (loginScreen);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#00A795"
+    backgroundColor: "#313837",
+   
   },
   MainContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#00A795"
+    backgroundColor: "#313837"
   },
   secondContainer: {
     marginRight: "75%"
@@ -141,8 +193,13 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   textInputDesign: {
-    width: "80%"
+    width: "80%",
+    backgroundColor:"white",
+    borderRadius: 25,
+    textAlign: "center",
+    height: 60
+  
   }
 });
 
-export default loginScreen;
+
